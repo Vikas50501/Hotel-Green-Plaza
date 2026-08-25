@@ -54,10 +54,11 @@ Kept in substance, rebuilt in the new visual language:
 `faq`, `pricing`, `shop`, `shop-details`, `thank-you`, `mail.php`, `news-mail.php`.
 
 **Sections deleted:** hero slider carousel, date-picker "booking" bar (a fake
-availability widget), pricing tables, team members, testimonials, brand-logo
-strip, blog feed, shop/product grids, counters, skill bars, video-popup band,
-newsletter bar, social links, "Mon–Fri 9:00–19:00" top bar and its demo phone
-number.
+availability widget), pricing tables, team members, the theme's own fabricated
+testimonials, brand-logo strip, blog feed, shop/product grids, counters, skill
+bars, video-popup band, newsletter bar, social links, "Mon–Fri 9:00–19:00" top
+bar and its demo phone number. (A real "What Our Guests Say" section was added
+back later — see §4a — once actual guest reviews were supplied.)
 
 **CSS deleted:** `bootstrap.min.css`, `animate.min.css`, `dripicons.css`,
 `fontawesome-all.min.css`, `magnific-popup.css`, `meanmenu.css`, `slick.css`,
@@ -79,8 +80,40 @@ Built from scratch in the theme's visual language: **trust band**, **amenities
 icon grid**, **room-facility chips**, **gallery category filter**, **accessible
 lightbox**, **enquiry form with enquiry-type dropdown**, **sticky mobile
 `Call | Enquire | Book` bar**, **inner-page banner + breadcrumbs**, **click-to-load
-map**, **404 page**, and a **34-symbol inline SVG icon set** (1.5 px stroke,
-one style, replacing two mismatched icon fonts).
+map**, **404 page**, a **guest reviews section** (§4a), and a **35-symbol inline
+SVG icon set** (1.5 px stroke, one style, replacing two mismatched icon fonts).
+
+## 4a. Guest reviews — real, not fabricated
+
+The spec (§49, §36) forbids inventing testimonials, and none existed at first —
+so the original build shipped without a reviews section at all. The hotel later
+supplied `hotel_greenplaza_1396_reviews.csv`, its own exported Google/Tripadvisor
+reviews, plus the current Google Business Profile aggregate: **4.1 / 5 from
+2,981 reviews**.
+
+- The CSV's 331 rows are 166 unique reviews once exact duplicate export rows
+  are removed. One long review was excluded from consideration because it's
+  about *other, unrelated* hotels named "Hotel Green" in different states —
+  not this property — so quoting it would misattribute someone else's opinion.
+- Nine reviews are quoted on the homepage (`REVIEWS` in `_build/build.py`),
+  chosen for topic spread (food, rooms, family/kids, parking, staff, value,
+  pure-veg, highway convenience) across both platforms and ratings 4–5.
+  Wording is unedited; only punctuation/capitalisation was cleaned up for
+  on-site readability.
+- The aggregate score renders as a genuine partial-fill star (4.1 → 82% of the
+  fifth star), and both figures are attributed: *"Based on 2,981 Google
+  reviews."* The same figures back an `AggregateRating` node on the Hotel
+  schema for search-result star snippets.
+- **`Read More Reviews on Google`** currently points at a Google *search* URL
+  (`google.com/search?q=Hotel+Green+Plaza+Bhilwara+reviews`) because no
+  confirmed Google Business Profile link was supplied. [VERIFY: swap
+  `REVIEWS_SOURCE_LINK` in `build.py` for the hotel's actual "see all reviews"
+  short link once available] — it works today, just not as precisely as a
+  direct listing link would.
+- Star-rating icons are solid-fill, not the sitewide outline stroke style —
+  a deliberate, documented exception (`style.css`, "Testimonials" section):
+  rating stars are a distinct, universally recognised convention, not a
+  decorative feature icon.
 
 ## 5. Design decisions worth knowing
 
@@ -102,8 +135,7 @@ one style, replacing two mismatched icon fonts).
 - **No booking engine, so no fake calendar.** Every `Book Your Stay`,
   `Book / Enquire Now` and `Check Availability` CTA opens the enquiry form at
   `/contact/#enquiry`.
-- **No testimonials section** — the spec forbids fabricating them and none were
-  supplied. Add `What Our Guests Say` once you have real, attributable reviews.
+- **Testimonials are real, sourced from the hotel's own reviews export — see §4a.**
 - **No video gallery** — spec §15 says not to ship empty gallery states.
 - **No social icons** — no verified profiles were supplied.
 - **Critical CSS is not inlined.** The spec asks for it, but the whole stylesheet

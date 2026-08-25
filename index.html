@@ -73,7 +73,14 @@
         { "@type": "LocationFeatureSpecification", "name": "Same-day laundry service", "value": true },
         { "@type": "LocationFeatureSpecification", "name": "Travel ticket assistance", "value": true },
         { "@type": "LocationFeatureSpecification", "name": "Car rental", "value": true }
-      ]
+      ],
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "4.1",
+        "reviewCount": "2981",
+        "bestRating": "5",
+        "worstRating": "1"
+      }
     },
     {
       "@type": "Restaurant",
@@ -142,6 +149,7 @@
 <symbol id="gp-chevron-left" viewBox="0 0 24 24"><path d="m14 6-6 6 6 6"/></symbol>
 <symbol id="gp-chevron-right" viewBox="0 0 24 24"><path d="m10 6 6 6-6 6"/></symbol>
 <symbol id="gp-celebration" viewBox="0 0 24 24"><path d="m3 21 5.5-13L16 15.5z"/><path d="M15 3v2M20 5.5 18.5 7M21 11h-2"/><path d="M12.5 6.5 14 8"/></symbol>
+<symbol id="gp-star" viewBox="0 0 24 24"><path d="M12 2.5l2.9 6.6 7.1.6-5.4 4.7 1.6 7-6.2-3.8-6.2 3.8 1.6-7-5.4-4.7 7.1-.6z"/></symbol>
 </defs></svg>
 
 <header class="gp-header">
@@ -505,8 +513,156 @@
     </div>
   </section>
 
+  <!-- ============================= TESTIMONIALS ============================= -->
+  <section class="gp-section gp-bg-cream" id="reviews">
+    <div class="container">
+      <div class="gp-heading gp-text-center gp-narrow gp-mx-auto gp-reveal">
+        <span class="gp-eyebrow">Guest Reviews</span>
+        <h2>What Our Guests Say</h2>
+        <p>Real feedback from guests who have stayed, dined and celebrated with us in Bhilwara.</p>
+      </div>
+
+      <div class="gp-text-center">
+    <div class="gp-rating gp-reveal">
+      <span class="gp-rating__score">4.1</span>
+      <div class="gp-rating__meta">
+        <div class="gp-stars" style="--gp-rating:4.1;" role="img" aria-label="Rated 4.1 out of 5">
+          <div class="gp-stars__track"><svg class="gp-star" aria-hidden="true"><use href="#gp-star"/></svg><svg class="gp-star" aria-hidden="true"><use href="#gp-star"/></svg><svg class="gp-star" aria-hidden="true"><use href="#gp-star"/></svg><svg class="gp-star" aria-hidden="true"><use href="#gp-star"/></svg><svg class="gp-star" aria-hidden="true"><use href="#gp-star"/></svg></div>
+          <div class="gp-stars__fill"><svg class="gp-star" aria-hidden="true"><use href="#gp-star"/></svg><svg class="gp-star" aria-hidden="true"><use href="#gp-star"/></svg><svg class="gp-star" aria-hidden="true"><use href="#gp-star"/></svg><svg class="gp-star" aria-hidden="true"><use href="#gp-star"/></svg><svg class="gp-star" aria-hidden="true"><use href="#gp-star"/></svg></div>
+        </div>
+        <p class="gp-small">Based on 2,981 Google reviews</p>
+      </div>
+    </div>
+      </div>
+
+      <div class="row gp-gap-30">
+        <div class="col-12 col-md-6 col-lg-4">
+          <article class="gp-testimonial gp-reveal">
+            <div class="gp-testimonial__stars"><svg class="gp-star" aria-hidden="true"><use href="#gp-star"/></svg><svg class="gp-star" aria-hidden="true"><use href="#gp-star"/></svg><svg class="gp-star" aria-hidden="true"><use href="#gp-star"/></svg><svg class="gp-star" aria-hidden="true"><use href="#gp-star"/></svg><svg class="gp-star" aria-hidden="true"><use href="#gp-star"/></svg></div>
+            <p class="gp-testimonial__quote">&ldquo;Very good restaurant, pure veg, very clean, and the food quality is also good.&rdquo;</p>
+            <div class="gp-testimonial__author">
+              <span class="gp-testimonial__avatar" aria-hidden="true">AH</span>
+              <div>
+                <strong>Abdul Hamid Shaikh</strong>
+                <span class="gp-small">Google Review</span>
+              </div>
+            </div>
+          </article>
+        </div>
+        <div class="col-12 col-md-6 col-lg-4">
+          <article class="gp-testimonial gp-reveal">
+            <div class="gp-testimonial__stars"><svg class="gp-star" aria-hidden="true"><use href="#gp-star"/></svg><svg class="gp-star" aria-hidden="true"><use href="#gp-star"/></svg><svg class="gp-star" aria-hidden="true"><use href="#gp-star"/></svg><svg class="gp-star" aria-hidden="true"><use href="#gp-star"/></svg><svg class="gp-star" aria-hidden="true"><use href="#gp-star"/></svg></div>
+            <p class="gp-testimonial__quote">&ldquo;Best ever hotel on this route. 100% safe for family stay, very good in behaviour. The food is always good.&rdquo;</p>
+            <div class="gp-testimonial__author">
+              <span class="gp-testimonial__avatar" aria-hidden="true">SA</span>
+              <div>
+                <strong>Shoeb Ansari</strong>
+                <span class="gp-small">Google Review</span>
+              </div>
+            </div>
+          </article>
+        </div>
+        <div class="col-12 col-md-6 col-lg-4">
+          <article class="gp-testimonial gp-reveal">
+            <div class="gp-testimonial__stars"><svg class="gp-star" aria-hidden="true"><use href="#gp-star"/></svg><svg class="gp-star" aria-hidden="true"><use href="#gp-star"/></svg><svg class="gp-star" aria-hidden="true"><use href="#gp-star"/></svg><svg class="gp-star" aria-hidden="true"><use href="#gp-star"/></svg><svg class="gp-star" aria-hidden="true"><use href="#gp-star"/></svg></div>
+            <p class="gp-testimonial__quote">&ldquo;Lots of parking, and a very good place on the highway. Neat and clean restaurant and washrooms — it's pure vegetarian, and food was served fast and tasty.&rdquo;</p>
+            <div class="gp-testimonial__author">
+              <span class="gp-testimonial__avatar" aria-hidden="true">S</span>
+              <div>
+                <strong>SumithD_13</strong>
+                <span class="gp-small">Tripadvisor Review</span>
+              </div>
+            </div>
+          </article>
+        </div>
+        <div class="col-12 col-md-6 col-lg-4">
+          <article class="gp-testimonial gp-reveal">
+            <div class="gp-testimonial__stars"><svg class="gp-star" aria-hidden="true"><use href="#gp-star"/></svg><svg class="gp-star" aria-hidden="true"><use href="#gp-star"/></svg><svg class="gp-star" aria-hidden="true"><use href="#gp-star"/></svg><svg class="gp-star" aria-hidden="true"><use href="#gp-star"/></svg><svg class="gp-star" aria-hidden="true"><use href="#gp-star"/></svg></div>
+            <p class="gp-testimonial__quote">&ldquo;The room is quite good, and they also have a restaurant open till 3am. The food is good too — thanks to Musa Bhai for managing the hotel rooms.&rdquo;</p>
+            <div class="gp-testimonial__author">
+              <span class="gp-testimonial__avatar" aria-hidden="true">AS</span>
+              <div>
+                <strong>Amogh Shenoy</strong>
+                <span class="gp-small">Google Review</span>
+              </div>
+            </div>
+          </article>
+        </div>
+        <div class="col-12 col-md-6 col-lg-4">
+          <article class="gp-testimonial gp-reveal">
+            <div class="gp-testimonial__stars"><svg class="gp-star" aria-hidden="true"><use href="#gp-star"/></svg><svg class="gp-star" aria-hidden="true"><use href="#gp-star"/></svg><svg class="gp-star" aria-hidden="true"><use href="#gp-star"/></svg><svg class="gp-star" aria-hidden="true"><use href="#gp-star"/></svg><svg class="gp-star" aria-hidden="true"><use href="#gp-star"/></svg></div>
+            <p class="gp-testimonial__quote">&ldquo;Excellent tasty food at a reasonable price. Great service too.&rdquo;</p>
+            <div class="gp-testimonial__author">
+              <span class="gp-testimonial__avatar" aria-hidden="true">AS</span>
+              <div>
+                <strong>Atul Soral</strong>
+                <span class="gp-small">Google Review</span>
+              </div>
+            </div>
+          </article>
+        </div>
+        <div class="col-12 col-md-6 col-lg-4">
+          <article class="gp-testimonial gp-reveal">
+            <div class="gp-testimonial__stars"><svg class="gp-star" aria-hidden="true"><use href="#gp-star"/></svg><svg class="gp-star" aria-hidden="true"><use href="#gp-star"/></svg><svg class="gp-star" aria-hidden="true"><use href="#gp-star"/></svg><svg class="gp-star" aria-hidden="true"><use href="#gp-star"/></svg><svg class="gp-star" aria-hidden="true"><use href="#gp-star"/></svg></div>
+            <p class="gp-testimonial__quote">&ldquo;A self-sufficient place to stay for days. The staff and management here are great — they try to help you as much as possible.&rdquo;</p>
+            <div class="gp-testimonial__author">
+              <span class="gp-testimonial__avatar" aria-hidden="true">DW</span>
+              <div>
+                <strong>Daksh Wankhade</strong>
+                <span class="gp-small">Google Review</span>
+              </div>
+            </div>
+          </article>
+        </div>
+        <div class="col-12 col-md-6 col-lg-4">
+          <article class="gp-testimonial gp-reveal">
+            <div class="gp-testimonial__stars"><svg class="gp-star" aria-hidden="true"><use href="#gp-star"/></svg><svg class="gp-star" aria-hidden="true"><use href="#gp-star"/></svg><svg class="gp-star" aria-hidden="true"><use href="#gp-star"/></svg><svg class="gp-star" aria-hidden="true"><use href="#gp-star"/></svg><svg class="gp-star" aria-hidden="true"><use href="#gp-star"/></svg></div>
+            <p class="gp-testimonial__quote">&ldquo;Nice garden and play area for kids, and the food quality is great. Big AC hall for parties too.&rdquo;</p>
+            <div class="gp-testimonial__author">
+              <span class="gp-testimonial__avatar" aria-hidden="true">YM</span>
+              <div>
+                <strong>Yuvraj Malik</strong>
+                <span class="gp-small">Google Review</span>
+              </div>
+            </div>
+          </article>
+        </div>
+        <div class="col-12 col-md-6 col-lg-4">
+          <article class="gp-testimonial gp-reveal">
+            <div class="gp-testimonial__stars"><svg class="gp-star" aria-hidden="true"><use href="#gp-star"/></svg><svg class="gp-star" aria-hidden="true"><use href="#gp-star"/></svg><svg class="gp-star" aria-hidden="true"><use href="#gp-star"/></svg><svg class="gp-star" aria-hidden="true"><use href="#gp-star"/></svg></div>
+            <p class="gp-testimonial__quote">&ldquo;We stay here regularly — rooms are clean, location is good near the highway, and the food is very good.&rdquo;</p>
+            <div class="gp-testimonial__author">
+              <span class="gp-testimonial__avatar" aria-hidden="true">S</span>
+              <div>
+                <strong>SRT2013</strong>
+                <span class="gp-small">Tripadvisor Review</span>
+              </div>
+            </div>
+          </article>
+        </div>
+        <div class="col-12 col-md-6 col-lg-4">
+          <article class="gp-testimonial gp-reveal">
+            <div class="gp-testimonial__stars"><svg class="gp-star" aria-hidden="true"><use href="#gp-star"/></svg><svg class="gp-star" aria-hidden="true"><use href="#gp-star"/></svg><svg class="gp-star" aria-hidden="true"><use href="#gp-star"/></svg><svg class="gp-star" aria-hidden="true"><use href="#gp-star"/></svg><svg class="gp-star" aria-hidden="true"><use href="#gp-star"/></svg></div>
+            <p class="gp-testimonial__quote">&ldquo;Good to have a safe and comfortable stay when you're out on the road, and this place has 24/7 service.&rdquo;</p>
+            <div class="gp-testimonial__author">
+              <span class="gp-testimonial__avatar" aria-hidden="true">AD</span>
+              <div>
+                <strong>ADITYA DHADIWAL</strong>
+                <span class="gp-small">Google Review</span>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+
+      <div class="gp-text-center gp-mt-40">
+        <a class="gp-btn gp-btn--secondary" href="https://www.google.com/search?q=Hotel+Green+Plaza+Bhilwara+reviews" target="_blank" rel="noopener">Read More Reviews on Google</a>
+      </div>
+    </div>
+  </section>
+
   <!-- ============================= LOCATION ============================= -->
-  <section class="gp-section gp-bg-cream">
+  <section class="gp-section gp-bg-white">
     <div class="container">
       <div class="row gp-split">
         <div class="col-12 col-lg-5">

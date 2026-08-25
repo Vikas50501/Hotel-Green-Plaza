@@ -73,6 +73,108 @@ MAPS_EMBED = "https://maps.google.com/maps?q=" + MAPS_QUERY + "&amp;output=embed
 def phone_links(phones, sep=" &middot; "):
     return sep.join('<a href="tel:%s">%s</a>' % (t, label) for t, label in phones)
 
+
+# ---------------------------------------------------------------------------
+# Guest reviews — curated from hotel_greenplaza_1396_reviews.csv (the hotel's
+# own exported Google/Tripadvisor reviews). 166 unique reviews after removing
+# duplicate export rows; the aggregate score/count below are the hotel's
+# current Google Business Profile figures, supplied directly by the hotel.
+# Quotes are trimmed to a display length and lightly punctuated for
+# readability; wording and sentiment are unedited and unfabricated.
+# ---------------------------------------------------------------------------
+
+AGGREGATE_RATING = "4.1"
+AGGREGATE_COUNT = 2981
+REVIEWS_SOURCE_LINK = "https://www.google.com/search?q=Hotel+Green+Plaza+Bhilwara+reviews"
+# [VERIFY: Google Business Profile review link] — swap the line above for the
+# hotel's own "See all reviews" short link once confirmed.
+
+REVIEWS = [
+    (5, "Abdul Hamid Shaikh", "Google",
+     "Very good restaurant, pure veg, very clean, and the food quality is also good."),
+    (5, "Shoeb Ansari", "Google",
+     "Best ever hotel on this route. 100% safe for family stay, very good in behaviour. The food is always good."),
+    (5, "SumithD_13", "Tripadvisor",
+     "Lots of parking, and a very good place on the highway. Neat and clean restaurant and washrooms — it's pure vegetarian, and food was served fast and tasty."),
+    (5, "Amogh Shenoy", "Google",
+     "The room is quite good, and they also have a restaurant open till 3am. The food is good too — thanks to Musa Bhai for managing the hotel rooms."),
+    (5, "Atul Soral", "Google",
+     "Excellent tasty food at a reasonable price. Great service too."),
+    (5, "Daksh Wankhade", "Google",
+     "A self-sufficient place to stay for days. The staff and management here are great — they try to help you as much as possible."),
+    (5, "Yuvraj Malik", "Google",
+     "Nice garden and play area for kids, and the food quality is great. Big AC hall for parties too."),
+    (4, "SRT2013", "Tripadvisor",
+     "We stay here regularly — rooms are clean, location is good near the highway, and the food is very good."),
+    (5, "ADITYA DHADIWAL", "Google",
+     "Good to have a safe and comfortable stay when you're out on the road, and this place has 24/7 service."),
+]
+
+
+def initials(name):
+    parts = [p for p in name.split() if p]
+    letters = "".join(p[0] for p in parts[:2])
+    return letters.upper()
+
+
+def stars_markup(rating, size_cls=""):
+    star = f'<svg class="gp-star{(" " + size_cls) if size_cls else ""}" aria-hidden="true"><use href="#gp-star"/></svg>'
+    return star * int(round(rating))
+
+
+def rating_badge_markup(rating, count):
+    stars = ('<svg class="gp-star" aria-hidden="true"><use href="#gp-star"/></svg>' * 5)
+    return f"""    <div class="gp-rating gp-reveal">
+      <span class="gp-rating__score">{rating}</span>
+      <div class="gp-rating__meta">
+        <div class="gp-stars" style="--gp-rating:{rating};" role="img" aria-label="Rated {rating} out of 5">
+          <div class="gp-stars__track">{stars}</div>
+          <div class="gp-stars__fill">{stars}</div>
+        </div>
+        <p class="gp-small">Based on {count:,} Google reviews</p>
+      </div>
+    </div>"""
+
+
+def testimonials_section():
+    cards = "\n".join(f"""        <div class="col-12 col-md-6 col-lg-4">
+          <article class="gp-testimonial gp-reveal">
+            <div class="gp-testimonial__stars">{stars_markup(rating)}</div>
+            <p class="gp-testimonial__quote">&ldquo;{quote}&rdquo;</p>
+            <div class="gp-testimonial__author">
+              <span class="gp-testimonial__avatar" aria-hidden="true">{initials(name)}</span>
+              <div>
+                <strong>{name}</strong>
+                <span class="gp-small">{platform} Review</span>
+              </div>
+            </div>
+          </article>
+        </div>""" for rating, name, platform, quote in REVIEWS)
+
+    return f"""  <!-- ============================= TESTIMONIALS ============================= -->
+  <section class="gp-section gp-bg-cream" id="reviews">
+    <div class="container">
+      <div class="gp-heading gp-text-center gp-narrow gp-mx-auto gp-reveal">
+        <span class="gp-eyebrow">Guest Reviews</span>
+        <h2>What Our Guests Say</h2>
+        <p>Real feedback from guests who have stayed, dined and celebrated with us in Bhilwara.</p>
+      </div>
+
+      <div class="gp-text-center">
+{rating_badge_markup(AGGREGATE_RATING, AGGREGATE_COUNT)}
+      </div>
+
+      <div class="row gp-gap-30">
+{cards}
+      </div>
+
+      <div class="gp-text-center gp-mt-40">
+        <a class="gp-btn gp-btn--secondary" href="{REVIEWS_SOURCE_LINK}" target="_blank" rel="noopener">Read More Reviews on Google</a>
+      </div>
+    </div>
+  </section>
+"""
+
 NAV = [
     ("Home", "/"),
     ("About Us", "/about-us/"),
@@ -122,6 +224,7 @@ SPRITE = """<svg class="gp-sprite" xmlns="http://www.w3.org/2000/svg" aria-hidde
 <symbol id="gp-chevron-left" viewBox="0 0 24 24"><path d="m14 6-6 6 6 6"/></symbol>
 <symbol id="gp-chevron-right" viewBox="0 0 24 24"><path d="m10 6 6 6-6 6"/></symbol>
 <symbol id="gp-celebration" viewBox="0 0 24 24"><path d="m3 21 5.5-13L16 15.5z"/><path d="M15 3v2M20 5.5 18.5 7M21 11h-2"/><path d="M12.5 6.5 14 8"/></symbol>
+<symbol id="gp-star" viewBox="0 0 24 24"><path d="M12 2.5l2.9 6.6 7.1.6-5.4 4.7 1.6 7-6.2-3.8-6.2 3.8 1.6-7-5.4-4.7 7.1-.6z"/></symbol>
 </defs></svg>"""
 
 
@@ -352,8 +455,15 @@ HOTEL_SCHEMA = """    {
         { "@type": "LocationFeatureSpecification", "name": "Same-day laundry service", "value": true },
         { "@type": "LocationFeatureSpecification", "name": "Travel ticket assistance", "value": true },
         { "@type": "LocationFeatureSpecification", "name": "Car rental", "value": true }
-      ]
-    }""" % {"site": SITE}
+      ],
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "%(rating)s",
+        "reviewCount": "%(count)s",
+        "bestRating": "5",
+        "worstRating": "1"
+      }
+    }""" % {"site": SITE, "rating": AGGREGATE_RATING, "count": AGGREGATE_COUNT}
 
 RESTAURANT_SCHEMA = """    {
       "@type": "Restaurant",
@@ -899,7 +1009,8 @@ def home_body():
     </div>
   </section>
 
-{location_section('gp-bg-cream')}
+{testimonials_section()}
+{location_section('gp-bg-white')}
 {cta_band()}"""
 
 

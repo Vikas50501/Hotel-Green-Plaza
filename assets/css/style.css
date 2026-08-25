@@ -19,13 +19,14 @@
    14. Trust band
    15. Amenity & service grids
    16. Gallery, filter & lightbox
-   17. Forms
-   18. Location & map
-   19. CTA band
-   20. Footer
-   21. Sticky mobile action bar
-   22. Motion
-   23. Responsive
+   17. Testimonials
+   18. Forms
+   19. Location & map
+   20. CTA band
+   21. Footer
+   22. Sticky mobile action bar
+   23. Motion
+   24. Responsive
    ========================================================================== */
 
 /* ==========================================================================
@@ -1275,7 +1276,125 @@ p:last-child { margin-bottom: 0; }
 body.gp-no-scroll { overflow: hidden; }
 
 /* ==========================================================================
-   17. Forms
+   17. Testimonials
+   ========================================================================== */
+
+/* Aggregate rating badge (e.g. "4.1 · 2,981 Google reviews") */
+.gp-rating {
+  display: inline-flex;
+  align-items: center;
+  gap: 18px;
+  margin: 0 auto 52px;
+  padding: 18px 28px;
+  background: var(--gp-white);
+  border: 1px solid var(--gp-line);
+  border-radius: var(--gp-radius-lg);
+  box-shadow: var(--gp-shadow-sm);
+}
+
+.gp-rating__score {
+  font-family: var(--gp-font-head);
+  font-size: 34px;
+  font-weight: 600;
+  color: var(--gp-primary);
+  line-height: 1;
+}
+
+.gp-rating__meta { text-align: left; }
+.gp-rating__meta p { margin-top: 4px; margin-bottom: 0; }
+
+/* Star rating — a deliberate, documented exception to the single stroke-icon
+   rule: rating stars are a distinct, universally-recognised UI convention
+   (solid, not outline), not part of the decorative feature-icon set. Built
+   from one filled star shape so "on" vs "off" is colour, not two icon styles. */
+.gp-stars {
+  position: relative;
+  display: inline-flex;
+  width: fit-content;
+}
+
+.gp-stars__track,
+.gp-stars__fill {
+  display: flex;
+  gap: 2px;
+}
+
+.gp-stars__fill {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  width: calc(var(--gp-rating, 5) / 5 * 100%);
+}
+
+.gp-star {
+  width: 18px;
+  height: 18px;
+  flex: none;
+}
+
+.gp-stars__track .gp-star { fill: var(--gp-line); }
+.gp-stars__fill .gp-star { fill: var(--gp-leaf); }
+
+.gp-star--sm { width: 14px; height: 14px; }
+
+/* Testimonial cards */
+.gp-testimonial {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding: 30px;
+  background: var(--gp-white);
+  border: 1px solid var(--gp-line);
+  border-radius: var(--gp-radius-lg);
+  box-shadow: var(--gp-shadow-sm);
+  transition: transform .4s var(--gp-ease), box-shadow .4s var(--gp-ease);
+}
+
+.gp-testimonial:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--gp-shadow-md);
+}
+
+.gp-testimonial__stars { margin-bottom: 16px; }
+
+.gp-testimonial__quote {
+  flex: 1 1 auto;
+  color: var(--gp-ink);
+  font-size: 16px;
+  line-height: 1.65;
+  margin-bottom: 22px;
+}
+
+.gp-testimonial__author {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.gp-testimonial__avatar {
+  display: grid;
+  place-items: center;
+  width: 46px;
+  height: 46px;
+  flex: none;
+  background: var(--gp-tint);
+  border-radius: 50%;
+  font-family: var(--gp-font-head);
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--gp-primary);
+}
+
+.gp-testimonial__author strong {
+  display: block;
+  font-size: 15px;
+  color: var(--gp-ink);
+}
+
+.gp-testimonial__author .gp-small { margin-top: 2px; }
+
+/* ==========================================================================
+   18. Forms
    ========================================================================== */
 
 .gp-form-panel {
@@ -1383,7 +1502,7 @@ body.gp-no-scroll { overflow: hidden; }
 .gp-form__status[hidden] { display: none; }
 
 /* ==========================================================================
-   18. Location & map
+   19. Location & map
    ========================================================================== */
 
 .gp-contact-list { display: grid; gap: 22px; }
@@ -1463,7 +1582,7 @@ body.gp-no-scroll { overflow: hidden; }
 }
 
 /* ==========================================================================
-   19. CTA band
+   20. CTA band
    ========================================================================== */
 
 .gp-cta {
@@ -1497,7 +1616,7 @@ body.gp-no-scroll { overflow: hidden; }
 .gp-cta p { color: var(--gp-white); }
 
 /* ==========================================================================
-   20. Footer
+   21. Footer
    ========================================================================== */
 
 .gp-footer {
@@ -1566,7 +1685,7 @@ body.gp-no-scroll { overflow: hidden; }
 }
 
 /* ==========================================================================
-   21. Sticky mobile action bar
+   22. Sticky mobile action bar
    ========================================================================== */
 
 .gp-actionbar {
@@ -1606,7 +1725,7 @@ body.gp-no-scroll { overflow: hidden; }
 .gp-actionbar a:last-child .gp-icon { stroke: var(--gp-white); }
 
 /* ==========================================================================
-   22. Motion — fade & rise, once, respectful of reduced-motion
+   23. Motion — fade & rise, once, respectful of reduced-motion
    ========================================================================== */
 
 .gp-reveal {
@@ -1621,7 +1740,7 @@ body.gp-no-scroll { overflow: hidden; }
 }
 
 /* ==========================================================================
-   23. Responsive
+   24. Responsive
    ========================================================================== */
 
 @media (min-width: 576px) {
@@ -1765,6 +1884,9 @@ body.gp-no-scroll { overflow: hidden; }
   .gp-amenity-grid,
   .gp-service-grid,
   .gp-event-grid { grid-template-columns: 1fr; }
+
+  .gp-rating { flex-direction: column; text-align: center; padding: 22px; }
+  .gp-rating__meta { text-align: center; }
 
   .gp-masonry { column-count: 1; }
 

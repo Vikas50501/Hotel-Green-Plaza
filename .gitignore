@@ -1,0 +1,11 @@
+# Archived original vendor theme — kept on disk for reference, not part of
+# the built site. See CHANGELOG.md "Two folders to delete before you deploy".
+_theme-original/
+
+# OS / editor cruft
+.DS_Store
+Thumbs.db
+
+# Python build-script cache
+__pycache__/
+*.pyc

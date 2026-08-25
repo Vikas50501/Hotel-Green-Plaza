@@ -234,6 +234,67 @@
   }
 
   /* ----------------------------------------------------------------------
+     Carousel — native scroll-snap handles drag/swipe; this only drives the
+     arrow buttons and the progress bar. Without JS it's still a plain
+     swipeable/scrollable row, so the markup works with zero script.
+     ---------------------------------------------------------------------- */
+
+  $$('.gp-carousel').forEach(function (root) {
+    var viewport = $('.gp-carousel__viewport', root);
+    var track = $('.gp-carousel__track', root);
+    var prevBtn = $('.gp-carousel__btn--prev', root);
+    var nextBtn = $('.gp-carousel__btn--next', root);
+    var bar = $('.gp-carousel__progress-bar', root);
+    if (!viewport || !track) return;
+
+    function step() {
+      var first = track.children[0];
+      if (!first) return viewport.clientWidth;
+      var gap = parseFloat(getComputedStyle(track).columnGap || getComputedStyle(track).gap || '0') || 0;
+      return first.getBoundingClientRect().width + gap;
+    }
+
+    function refresh() {
+      var max = track.scrollWidth - viewport.clientWidth;
+      var pos = viewport.scrollLeft;
+
+      // A few px of slack absorbs the browser's own scroll-snap settling
+      // (it rarely lands on exactly 0 or exactly max).
+      if (prevBtn) prevBtn.disabled = pos <= 8;
+      if (nextBtn) nextBtn.disabled = pos >= max - 8;
+
+      if (bar) {
+        if (max <= 0) {
+          bar.style.width = '100%';
+          bar.style.transform = 'translateX(0)';
+        } else {
+          var visible = Math.min(1, viewport.clientWidth / track.scrollWidth);
+          var trackWidth = bar.parentElement.clientWidth;
+          bar.style.width = (visible * 100) + '%';
+          bar.style.transform = 'translateX(' + ((pos / max) * trackWidth * (1 - visible)) + 'px)';
+        }
+      }
+    }
+
+    function go(direction) {
+      viewport.scrollBy({ left: direction * step(), behavior: reduceMotion ? 'auto' : 'smooth' });
+    }
+
+    if (prevBtn) prevBtn.addEventListener('click', function () { go(-1); });
+    if (nextBtn) nextBtn.addEventListener('click', function () { go(1); });
+
+    // Called directly rather than deferred to requestAnimationFrame: rAF is
+    // suspended whenever the tab/page isn't visible (backgrounded, another
+    // app in front on mobile), which would leave the buttons and progress
+    // bar stuck stale until the next visible scroll. refresh() is cheap
+    // enough to run on every scroll event without a rAF gate.
+    viewport.addEventListener('scroll', refresh, { passive: true });
+
+    window.addEventListener('resize', refresh);
+    refresh();
+  });
+
+  /* ----------------------------------------------------------------------
      Deferred map — the embed only loads once the guest asks for it
      ---------------------------------------------------------------------- */
 

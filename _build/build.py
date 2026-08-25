@@ -137,19 +137,19 @@ def rating_badge_markup(rating, count):
 
 
 def testimonials_section():
-    cards = "\n".join(f"""        <div class="col-12 col-md-6 col-lg-4">
-          <article class="gp-testimonial gp-reveal">
-            <div class="gp-testimonial__stars">{stars_markup(rating)}</div>
-            <p class="gp-testimonial__quote">&ldquo;{quote}&rdquo;</p>
-            <div class="gp-testimonial__author">
-              <span class="gp-testimonial__avatar" aria-hidden="true">{initials(name)}</span>
-              <div>
-                <strong>{name}</strong>
-                <span class="gp-small">{platform} Review</span>
+    slides = "\n".join(f"""          <li class="gp-carousel__slide">
+            <article class="gp-testimonial">
+              <div class="gp-testimonial__stars">{stars_markup(rating)}</div>
+              <p class="gp-testimonial__quote">&ldquo;{quote}&rdquo;</p>
+              <div class="gp-testimonial__author">
+                <span class="gp-testimonial__avatar" aria-hidden="true">{initials(name)}</span>
+                <div>
+                  <strong>{name}</strong>
+                  <span class="gp-small">{platform} Review</span>
+                </div>
               </div>
-            </div>
-          </article>
-        </div>""" for rating, name, platform, quote in REVIEWS)
+            </article>
+          </li>""" for rating, name, platform, quote in REVIEWS)
 
     return f"""  <!-- ============================= TESTIMONIALS ============================= -->
   <section class="gp-section gp-bg-cream" id="reviews">
@@ -164,8 +164,23 @@ def testimonials_section():
 {rating_badge_markup(AGGREGATE_RATING, AGGREGATE_COUNT)}
       </div>
 
-      <div class="row gp-gap-30">
-{cards}
+      <div class="gp-carousel gp-reveal" role="region" aria-label="Guest review carousel" data-carousel>
+        <div class="gp-carousel__viewport" tabindex="0">
+          <ul class="gp-carousel__track">
+{slides}
+          </ul>
+        </div>
+        <div class="gp-carousel__nav">
+          <button class="gp-carousel__btn gp-carousel__btn--prev" type="button" aria-label="Previous reviews">
+            {icon('chevron-left', 'gp-icon--primary')}
+          </button>
+          <div class="gp-carousel__progress" aria-hidden="true">
+            <span class="gp-carousel__progress-bar"></span>
+          </div>
+          <button class="gp-carousel__btn gp-carousel__btn--next" type="button" aria-label="Next reviews">
+            {icon('chevron-right', 'gp-icon--primary')}
+          </button>
+        </div>
       </div>
 
       <div class="gp-text-center gp-mt-40">

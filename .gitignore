@@ -1,11 +1,23 @@
-# Archived original vendor theme — kept on disk for reference, not part of
-# the built site. See CHANGELOG.md "Two folders to delete before you deploy".
+# Original vendor theme — local reference only, not part of the live site
 _theme-original/
 
 # OS / editor cruft
 .DS_Store
 Thumbs.db
+desktop.ini
+*.swp
+*.swo
+.vscode/
+.idea/
 
 # Python build-script cache
 __pycache__/
 *.pyc
+*.pyo
+
+# Local environment
+.env
+*.local
+
+# Node (if tooling is ever added)
+node_modules/

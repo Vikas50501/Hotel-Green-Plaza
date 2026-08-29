@@ -1208,11 +1208,80 @@ p:last-child { margin-bottom: 0; }
    15b. Restaurant menu
    ========================================================================== */
 
+/* Two-panel layout: sticky sidebar left, scrollable menu right */
+.gp-menu-layout {
+  display: flex;
+  gap: 32px;
+  align-items: flex-start;
+}
+
+/* LEFT: category sidebar */
+.gp-menu-sidebar {
+  width: 220px;
+  flex: none;
+  position: sticky;
+  top: calc(var(--gp-header-h) + 20px);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 20px 14px;
+  background: var(--gp-white);
+  border: 1px solid var(--gp-line);
+  border-radius: var(--gp-radius-lg);
+  box-shadow: var(--gp-shadow-sm);
+}
+
+.gp-menu-sidebar__label {
+  margin: 0 0 10px;
+  padding: 0 6px;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .12em;
+  color: var(--gp-muted);
+}
+
+/* Sidebar filter buttons override the generic .gp-filter__btn */
+.gp-menu-sidebar .gp-filter__btn {
+  width: 100%;
+  text-align: left;
+  justify-content: flex-start;
+  padding: 10px 12px;
+  border-radius: var(--gp-radius);
+  border: 1px solid transparent;
+  background: transparent;
+  color: var(--gp-ink);
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0;
+  text-transform: none;
+  min-height: 40px;
+}
+
+.gp-menu-sidebar .gp-filter__btn:hover {
+  background: var(--gp-tint);
+  border-color: var(--gp-line);
+  color: var(--gp-primary);
+}
+
+.gp-menu-sidebar .gp-filter__btn[aria-pressed="true"] {
+  background: var(--gp-primary);
+  border-color: var(--gp-primary);
+  color: var(--gp-white);
+}
+
+/* RIGHT: menu cards */
+.gp-menu-content {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
 /* CSS columns let long and short sections tile without leaving gaps; each
-   group is kept whole with break-inside: avoid. */
+   group is kept whole with break-inside: avoid. 2 columns because the
+   sidebar already takes ~252px of the container width. */
 .gp-menu {
-  column-count: 3;
-  column-gap: 28px;
+  column-count: 2;
+  column-gap: 24px;
 }
 
 .gp-menu__group {
@@ -1299,36 +1368,28 @@ p:last-child { margin-bottom: 0; }
 
 .gp-feature-list--2col { grid-template-columns: repeat(2, 1fr); }
 
-/* Sticky category filter that shortens the long menu to one course at a time */
-.gp-menu-nav {
-  position: sticky;
-  top: var(--gp-header-h);
-  z-index: 40;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 10px;
-  margin: 0 0 40px;
-  padding: 14px;
-  background: var(--gp-cream);
-  border-radius: var(--gp-radius-lg);
-  box-shadow: var(--gp-shadow-sm);
-}
-
+/* Mobile: sidebar stacks above menu as horizontal scroll strip */
 @media (max-width: 767.98px) {
-  .gp-menu-nav {
-    flex-wrap: nowrap;
-    justify-content: flex-start;
+  .gp-menu-layout { flex-direction: column; gap: 20px; }
+
+  .gp-menu-sidebar {
+    width: auto;
+    position: static;
+    flex-direction: row;
     overflow-x: auto;
-    border-radius: 0;
-    margin-left: calc(var(--gp-gutter) * -1);
-    margin-right: calc(var(--gp-gutter) * -1);
-    padding: 12px var(--gp-gutter);
+    gap: 8px;
+    padding: 12px;
+    border-radius: var(--gp-radius-lg);
     -webkit-overflow-scrolling: touch;
     scrollbar-width: none;
   }
-  .gp-menu-nav::-webkit-scrollbar { display: none; }
-  .gp-menu-nav .gp-filter__btn { white-space: nowrap; }
+  .gp-menu-sidebar::-webkit-scrollbar { display: none; }
+  .gp-menu-sidebar__label { display: none; }
+  .gp-menu-sidebar .gp-filter__btn {
+    white-space: nowrap;
+    width: auto;
+    flex: none;
+  }
 }
 
 /* ==========================================================================
@@ -2189,7 +2250,9 @@ body.gp-no-scroll { overflow: hidden; }
   .gp-service-grid { grid-template-columns: repeat(2, 1fr); }
   .gp-event-grid { grid-template-columns: repeat(2, 1fr); }
   .gp-masonry { column-count: 2; }
-  .gp-menu { column-count: 2; }
+  /* Sidebar (~180px) + gap + 1 menu column fits tablet comfortably */
+  .gp-menu-sidebar { width: 180px; }
+  .gp-menu { column-count: 1; }
   .gp-carousel__slide { flex-basis: calc((100% - 24px) / 2); }
 
   .gp-heading { margin-bottom: 40px; }
@@ -2226,6 +2289,7 @@ body.gp-no-scroll { overflow: hidden; }
   .gp-masonry { column-count: 1; }
   .gp-menu { column-count: 1; }
   .gp-feature-list--2col { grid-template-columns: 1fr; }
+  .gp-menu-content { min-width: 0; }
   .gp-menu__foot { padding: 24px; }
   /* Peek the next card so the row visibly reads as swipeable */
   .gp-carousel__slide { flex-basis: 86%; }

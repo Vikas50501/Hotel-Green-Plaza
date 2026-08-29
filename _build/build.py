@@ -1561,15 +1561,22 @@ def menu_section():
       <div class="gp-heading gp-text-center gp-narrow gp-mx-auto gp-reveal">
         <span class="gp-eyebrow">Our Menu</span>
         <h2>Pure Vegetarian Menu</h2>
-        <p>Punjabi, Chinese and South Indian dishes, freshly prepared. Tap a course to jump straight to it. Prices are in rupees and may change; please confirm current availability when you visit.</p>
+        <p>Punjabi, Chinese and South Indian dishes, freshly prepared. Select a course on the left to browse that section. Prices are in rupees and may change; please confirm current availability when you visit.</p>
       </div>
 
-      <div class="gp-menu-nav" role="group" aria-label="Filter menu by course" data-menu-nav>
+      <div class="gp-menu-layout">
+        <!-- LEFT: sticky category filter sidebar -->
+        <aside class="gp-menu-sidebar" role="group" aria-label="Filter menu by course" data-menu-nav>
+          <p class="gp-menu-sidebar__label">Browse by Course</p>
 {filters}
-      </div>
+        </aside>
 
-      <div class="gp-menu">
+        <!-- RIGHT: menu cards -->
+        <div class="gp-menu-content">
+          <div class="gp-menu">
 {groups}
+          </div>
+        </div>
       </div>
 
       <div class="gp-menu__foot gp-reveal">

@@ -29,7 +29,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&amp;family=Playfair+Display:wght@600&amp;display=swap">
 <link rel="preload" as="image" fetchpriority="high" href="/assets/img/hero/hotel-green-plaza-restaurant-banner.webp">
-<link rel="stylesheet" href="/assets/css/style.css?v=1372b30a">
+<link rel="stylesheet" href="/assets/css/style.css?v=5acf41d3">
 <noscript>
   <!-- Scroll reveal is progressive enhancement: without JS everything is simply visible -->
   <style>.gp-reveal{opacity:1;transform:none}.gp-map__poster{cursor:default}</style>
@@ -359,10 +359,13 @@
       <div class="gp-heading gp-text-center gp-narrow gp-mx-auto gp-reveal">
         <span class="gp-eyebrow">Our Menu</span>
         <h2>Pure Vegetarian Menu</h2>
-        <p>Punjabi, Chinese and South Indian dishes, freshly prepared. Tap a course to jump straight to it. Prices are in rupees and may change; please confirm current availability when you visit.</p>
+        <p>Punjabi, Chinese and South Indian dishes, freshly prepared. Select a course on the left to browse that section. Prices are in rupees and may change; please confirm current availability when you visit.</p>
       </div>
 
-      <div class="gp-menu-nav" role="group" aria-label="Filter menu by course" data-menu-nav>
+      <div class="gp-menu-layout">
+        <!-- LEFT: sticky category filter sidebar -->
+        <aside class="gp-menu-sidebar" role="group" aria-label="Filter menu by course" data-menu-nav>
+          <p class="gp-menu-sidebar__label">Browse by Course</p>
         <button class="gp-filter__btn" type="button" data-filter="all" aria-pressed="true">All</button>
         <button class="gp-filter__btn" type="button" data-filter="starters" aria-pressed="false">Soups &amp; Starters</button>
         <button class="gp-filter__btn" type="button" data-filter="south-indian" aria-pressed="false">South Indian</button>
@@ -371,9 +374,11 @@
         <button class="gp-filter__btn" type="button" data-filter="snacks" aria-pressed="false">Snacks &amp; Sides</button>
         <button class="gp-filter__btn" type="button" data-filter="beverages" aria-pressed="false">Beverages</button>
         <button class="gp-filter__btn" type="button" data-filter="desserts" aria-pressed="false">Desserts</button>
-      </div>
+        </aside>
 
-      <div class="gp-menu">
+        <!-- RIGHT: menu cards -->
+        <div class="gp-menu-content">
+          <div class="gp-menu">
         <div class="gp-menu__group gp-reveal" data-category="starters">
           <div class="gp-menu__group-head">
             <svg class="gp-icon gp-icon--sm" aria-hidden="true"><use href="#gp-utensils"/></svg>
@@ -1740,6 +1745,8 @@
               <span class="gp-menu__price">₹60</span>
             </li>
           </ul>
+        </div>
+          </div>
         </div>
       </div>
 

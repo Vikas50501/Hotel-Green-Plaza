@@ -1,0 +1,172 @@
+/* ==========================================================================
+   Hotel Green Plaza — responsive breakpoints
+   All min/max-width media queries for layout adaption.
+   ========================================================================== */
+
+@media (min-width: 576px) {
+  .container { max-width: 540px; }
+  .col-sm-1  { flex: 0 0 8.333333%;  max-width: 8.333333%; }
+  .col-sm-2  { flex: 0 0 16.666667%; max-width: 16.666667%; }
+  .col-sm-3  { flex: 0 0 25%;        max-width: 25%; }
+  .col-sm-4  { flex: 0 0 33.333333%; max-width: 33.333333%; }
+  .col-sm-5  { flex: 0 0 41.666667%; max-width: 41.666667%; }
+  .col-sm-6  { flex: 0 0 50%;        max-width: 50%; }
+  .col-sm-7  { flex: 0 0 58.333333%; max-width: 58.333333%; }
+  .col-sm-8  { flex: 0 0 66.666667%; max-width: 66.666667%; }
+  .col-sm-9  { flex: 0 0 75%;        max-width: 75%; }
+  .col-sm-10 { flex: 0 0 83.333333%; max-width: 83.333333%; }
+  .col-sm-11 { flex: 0 0 91.666667%; max-width: 91.666667%; }
+  .col-sm-12 { flex: 0 0 100%;       max-width: 100%; }
+}
+
+@media (min-width: 768px) {
+  .container { max-width: 720px; }
+  .col-md-1  { flex: 0 0 8.333333%;  max-width: 8.333333%; }
+  .col-md-2  { flex: 0 0 16.666667%; max-width: 16.666667%; }
+  .col-md-3  { flex: 0 0 25%;        max-width: 25%; }
+  .col-md-4  { flex: 0 0 33.333333%; max-width: 33.333333%; }
+  .col-md-5  { flex: 0 0 41.666667%; max-width: 41.666667%; }
+  .col-md-6  { flex: 0 0 50%;        max-width: 50%; }
+  .col-md-7  { flex: 0 0 58.333333%; max-width: 58.333333%; }
+  .col-md-8  { flex: 0 0 66.666667%; max-width: 66.666667%; }
+  .col-md-9  { flex: 0 0 75%;        max-width: 75%; }
+  .col-md-10 { flex: 0 0 83.333333%; max-width: 83.333333%; }
+  .col-md-11 { flex: 0 0 91.666667%; max-width: 91.666667%; }
+  .col-md-12 { flex: 0 0 100%;       max-width: 100%; }
+}
+
+@media (min-width: 992px) {
+  .container { max-width: 960px; }
+  .col-lg-1  { flex: 0 0 8.333333%;  max-width: 8.333333%; }
+  .col-lg-2  { flex: 0 0 16.666667%; max-width: 16.666667%; }
+  .col-lg-3  { flex: 0 0 25%;        max-width: 25%; }
+  .col-lg-4  { flex: 0 0 33.333333%; max-width: 33.333333%; }
+  .col-lg-5  { flex: 0 0 41.666667%; max-width: 41.666667%; }
+  .col-lg-6  { flex: 0 0 50%;        max-width: 50%; }
+  .col-lg-7  { flex: 0 0 58.333333%; max-width: 58.333333%; }
+  .col-lg-8  { flex: 0 0 66.666667%; max-width: 66.666667%; }
+  .col-lg-9  { flex: 0 0 75%;        max-width: 75%; }
+  .col-lg-10 { flex: 0 0 83.333333%; max-width: 83.333333%; }
+  .col-lg-11 { flex: 0 0 91.666667%; max-width: 91.666667%; }
+  .col-lg-12 { flex: 0 0 100%;       max-width: 100%; }
+  .gp-order-lg-first { order: -1; }
+}
+
+@media (min-width: 1200px) {
+  .container { max-width: 1200px; }
+  .col-xl-1  { flex: 0 0 8.333333%;  max-width: 8.333333%; }
+  .col-xl-2  { flex: 0 0 16.666667%; max-width: 16.666667%; }
+  .col-xl-3  { flex: 0 0 25%;        max-width: 25%; }
+  .col-xl-4  { flex: 0 0 33.333333%; max-width: 33.333333%; }
+  .col-xl-5  { flex: 0 0 41.666667%; max-width: 41.666667%; }
+  .col-xl-6  { flex: 0 0 50%;        max-width: 50%; }
+  .col-xl-7  { flex: 0 0 58.333333%; max-width: 58.333333%; }
+  .col-xl-8  { flex: 0 0 66.666667%; max-width: 66.666667%; }
+  .col-xl-9  { flex: 0 0 75%;        max-width: 75%; }
+  .col-xl-10 { flex: 0 0 83.333333%; max-width: 83.333333%; }
+  .col-xl-11 { flex: 0 0 91.666667%; max-width: 91.666667%; }
+  .col-xl-12 { flex: 0 0 100%;       max-width: 100%; }
+}
+
+/* ---- Below 1200px: desktop nav collapses to hamburger ---- */
+@media (max-width: 1199.98px) {
+  .gp-nav { display: none; }
+  .gp-burger { display: inline-flex; }
+  .gp-header__actions { margin-left: auto; gap: 16px; }
+  .gp-topbar__group { gap: 18px; }
+  .gp-topbar a, .gp-topbar span.gp-topbar__item { font-size: 13px; }
+}
+
+@media (max-width: 1023.98px) {
+  .gp-topbar__location { display: none; }
+}
+
+/* ---- Tablet ---- */
+@media (max-width: 991.98px) {
+  :root {
+    --gp-section: 72px;
+    --gp-header-h: 75px;
+    --gp-topbar-h: 0px;
+  }
+
+  .gp-topbar { display: none; }
+
+  h1, .gp-h1 { font-size: 38px; }
+  h2, .gp-h2 { font-size: 32px; }
+  h3, .gp-h3 { font-size: 24px; }
+  body { font-size: 16px; }
+  .gp-lead { font-size: 17px; }
+
+  .gp-logo img { width: 96px; height: 55px; }
+
+  .gp-hero { min-height: 86vh; padding: calc(var(--gp-header-h) + 56px) 0 72px; }
+  .gp-hero p { font-size: 17px; }
+  .gp-banner { min-height: 34vh; }
+
+  .gp-trust__grid { grid-template-columns: repeat(2, 1fr); }
+  .gp-amenity-grid { grid-template-columns: repeat(2, 1fr); }
+  .gp-service-grid { grid-template-columns: repeat(2, 1fr); }
+  .gp-event-grid { grid-template-columns: repeat(2, 1fr); }
+  .gp-masonry { column-count: 2; }
+  .gp-menu-sidebar { width: 180px; }
+  .gp-menu { column-count: 1; }
+  .gp-carousel__slide { flex-basis: calc((100% - 24px) / 2); }
+
+  .gp-heading { margin-bottom: 40px; }
+  .gp-form-panel { padding: 32px; }
+
+  .gp-footer__bottom { margin-top: 56px; }
+}
+
+/* ---- Mobile ---- */
+@media (max-width: 767.98px) {
+  :root { --gp-section: 56px; }
+
+  .gp-header__actions .gp-btn { display: none; }
+
+  h1, .gp-h1 { font-size: 32px; }
+  h2, .gp-h2 { font-size: 28px; }
+  h3, .gp-h3 { font-size: 22px; }
+
+  .gp-eyebrow { font-size: 12px; }
+  .gp-small { font-size: 13px; }
+
+  .gp-hero { min-height: 92vh; }
+  .gp-hero p { font-size: 16px; }
+
+  .gp-trust__grid,
+  .gp-amenity-grid,
+  .gp-service-grid,
+  .gp-event-grid { grid-template-columns: 1fr; }
+
+  .gp-rating { flex-direction: column; text-align: center; padding: 22px; }
+  .gp-rating__meta { text-align: center; }
+
+  .gp-masonry { column-count: 1; }
+  .gp-menu { column-count: 1; }
+  .gp-feature-list--2col { grid-template-columns: 1fr; }
+  .gp-menu-content { min-width: 0; }
+  .gp-menu__foot { padding: 24px; }
+  .gp-carousel__slide { flex-basis: 86%; }
+  .gp-carousel__nav { margin-top: 20px; }
+
+  .gp-form { grid-template-columns: 1fr; }
+  .gp-form-panel { padding: 24px; }
+
+  .gp-btn-group .gp-btn { flex: 1 1 100%; }
+
+  .gp-actionbar { display: flex; }
+
+  body { padding-bottom: 60px; }
+  .gp-lightbox__prev { left: 12px; }
+  .gp-lightbox__next { right: 12px; }
+  .gp-lightbox__close { top: 12px; right: 12px; }
+
+  .gp-footer { padding-top: 56px; }
+  .gp-footer__bottom .container { justify-content: flex-start; }
+}
+
+@media (max-width: 575.98px) {
+  .gp-card__body { padding: 24px; }
+  .gp-trust__item { padding: 22px 20px; }
+}

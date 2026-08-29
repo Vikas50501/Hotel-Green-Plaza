@@ -1,0 +1,69 @@
+/* ==========================================================================
+   Hotel Green Plaza — animations & motion
+   Keyframes, reveal transitions, reduced-motion overrides, print.
+   ========================================================================== */
+
+/* Ken-Burns zoom on the hero image */
+@keyframes gp-kenburns {
+  from { transform: scale(1); }
+  to   { transform: scale(1.08); }
+}
+
+/* ==========================================================================
+   Scroll reveal — fade and rise, 18px, once
+   ========================================================================== */
+
+.gp-reveal {
+  opacity: 0;
+  transform: translateY(18px);
+  transition: opacity .5s var(--gp-ease), transform .5s var(--gp-ease);
+}
+
+.gp-reveal.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+/* ==========================================================================
+   Reduced motion
+   ========================================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: .001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .001ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .gp-reveal {
+    opacity: 1;
+    transform: none;
+  }
+
+  .gp-card:hover,
+  .gp-thumb:hover,
+  .gp-service:hover,
+  .gp-amenity:hover,
+  .gp-btn:hover { transform: none; }
+
+  .gp-card:hover .gp-card__media img,
+  .gp-thumb:hover img { transform: none; }
+}
+
+/* ==========================================================================
+   Print
+   ========================================================================== */
+
+@media print {
+  .gp-header,
+  .gp-actionbar,
+  .gp-mobile-panel,
+  .gp-lightbox { display: none !important; }
+
+  body { padding-bottom: 0; }
+}

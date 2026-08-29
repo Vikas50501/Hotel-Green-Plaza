@@ -1,20 +1,17 @@
-# OS / editor cruft
+# Dependencies
+node_modules/
+
+# Build outputs
+*.zip
+
+# OS files
 .DS_Store
 Thumbs.db
-desktop.ini
-*.swp
-*.swo
+
+# Editor files
 .vscode/
 .idea/
 
-# Python build-script cache
+# Python
 __pycache__/
 *.pyc
-*.pyo
-
-# Local environment
-.env
-*.local
-
-# Node (if tooling is ever added)
-node_modules/

@@ -1,8 +1,0 @@
-User-agent: *
-Allow: /
-
-# Working folders — delete both before deploying; these rules are a backstop only.
-Disallow: /_build/
-Disallow: /_theme-original/
-
-Sitemap: https://www.hotelgreenplaza.com/sitemap.xml

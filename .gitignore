@@ -1,6 +1,3 @@
-# Original vendor theme — local reference only, not part of the live site
-_theme-original/
-
 # OS / editor cruft
 .DS_Store
 Thumbs.db

@@ -83,6 +83,7 @@ class Doc(HTMLParser):
 
 def exists(path):
     """Resolve a root-relative site path to a file on disk."""
+    path = path.split("?")[0].split("#")[0]
     if path.startswith("/"):
         p = os.path.join(ROOT, path.lstrip("/"))
         if os.path.isdir(p):

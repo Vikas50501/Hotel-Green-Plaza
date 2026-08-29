@@ -157,6 +157,47 @@
   }
 
   /* ----------------------------------------------------------------------
+     Menu course filter — shortens the long menu to one course at a time.
+     Without JS every course is simply shown (the buttons just do nothing).
+     ---------------------------------------------------------------------- */
+
+  var menuNav = $('[data-menu-nav]');
+
+  if (menuNav) {
+    var menuGroups = $$('.gp-menu__group');
+
+    menuNav.addEventListener('click', function (event) {
+      var btn = event.target.closest('.gp-filter__btn');
+      if (!btn) return;
+
+      var wanted = btn.getAttribute('data-filter');
+
+      $$('.gp-filter__btn', menuNav).forEach(function (b) {
+        b.setAttribute('aria-pressed', String(b === btn));
+      });
+
+      menuGroups.forEach(function (group) {
+        var cat = group.getAttribute('data-category') || '';
+        var show = wanted === 'all' || cat === wanted;
+        group.hidden = !show;
+        // A group revealed by filtering may never have scrolled into view, so
+        // make sure it isn't left sitting at the reveal animation's start state.
+        if (show) group.classList.add('is-visible');
+      });
+
+      // If the user is scrolled past the top of the menu, bring the filtered
+      // result back up so they see the change instead of a jump mid-list.
+      var section = document.getElementById('menu');
+      if (section) {
+        var top = section.getBoundingClientRect().top + window.pageYOffset - 92;
+        if (window.pageYOffset > top) {
+          window.scrollTo({ top: top, behavior: reduceMotion ? 'auto' : 'smooth' });
+        }
+      }
+    });
+  }
+
+  /* ----------------------------------------------------------------------
      Lightbox
      ---------------------------------------------------------------------- */
 

@@ -6,11 +6,27 @@ identical on every page rather than eight hand-maintained copies.
 
 Run:  python _build/build.py
 """
+import hashlib
 import io
 import os
 import re
 
 ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..")
+
+
+def asset_ver(rel):
+    """Short content hash appended to CSS/JS URLs so a changed file busts the
+    browser cache automatically (returning visitors never get stale assets),
+    while an unchanged file keeps its cached copy."""
+    try:
+        with open(os.path.join(ROOT, rel), "rb") as fh:
+            return hashlib.md5(fh.read()).hexdigest()[:8]
+    except OSError:
+        return "1"
+
+
+CSS_VER = asset_ver("assets/css/style.css")
+JS_VER = asset_ver("assets/js/main.js")
 
 # Domain taken from the business card supplied by the hotel.
 SITE = "https://www.hotelgreenplaza.com"
@@ -49,7 +65,10 @@ BRANCHES = [
         "email": "hotelgreenindia@gmail.com",
     },
     {
-        "name": "Ratlam",
+        # The hotel's own menu names this the "Jaora Branch"; the town is Jaora,
+        # in Dist. Ratlam. Named by its town here, with the district kept in the
+        # address below.
+        "name": "Jaora",
         "html": ("S.H.&nbsp;-&nbsp;31, Village Parwaliya,<br>"
                  "Tehsil Jaora 457226,<br>"
                  "Dist. Ratlam, Madhya Pradesh"),
@@ -61,6 +80,13 @@ BRANCHES = [
 ]
 
 PRIMARY_TEL, PRIMARY_TEL_LABEL = BHILWARA["phones"][0]
+
+# WhatsApp click-to-chat — the hotel's primary mobile, with a prefilled message
+# so the guest lands in a ready-to-send enquiry. [VERIFY: confirm this number is
+# WhatsApp-enabled; swap if the hotel uses a different chat line]
+WHATSAPP_NUMBER = "918107367300"
+WHATSAPP_LINK = ("https://wa.me/" + WHATSAPP_NUMBER +
+                 "?text=Hi%20Hotel%20Green%20Plaza%2C%20I%27d%20like%20to%20make%20an%20enquiry.")
 
 # Built from the verified street address rather than a confirmed place ID, so it
 # resolves by address search. [VERIFY: Google Business Profile place link] —
@@ -240,6 +266,16 @@ SPRITE = """<svg class="gp-sprite" xmlns="http://www.w3.org/2000/svg" aria-hidde
 <symbol id="gp-chevron-right" viewBox="0 0 24 24"><path d="m10 6 6 6-6 6"/></symbol>
 <symbol id="gp-celebration" viewBox="0 0 24 24"><path d="m3 21 5.5-13L16 15.5z"/><path d="M15 3v2M20 5.5 18.5 7M21 11h-2"/><path d="M12.5 6.5 14 8"/></symbol>
 <symbol id="gp-star" viewBox="0 0 24 24"><path d="M12 2.5l2.9 6.6 7.1.6-5.4 4.7 1.6 7-6.2-3.8-6.2 3.8 1.6-7-5.4-4.7 7.1-.6z"/></symbol>
+<symbol id="gp-parking" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M9 17V7h4a3 3 0 0 1 0 6H9"/></symbol>
+<symbol id="gp-shield" viewBox="0 0 24 24"><path d="M12 3l7 3v5c0 4.6-3 7.7-7 9-4-1.3-7-4.4-7-9V6z"/><path d="m9 12 2 2 4-4"/></symbol>
+<symbol id="gp-tree" viewBox="0 0 24 24"><path d="M12 3 7 11h3l-4 6h12l-4-6h3z"/><path d="M12 17v4"/></symbol>
+<symbol id="gp-scissors" viewBox="0 0 24 24"><circle cx="6" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><path d="M20 4 8.12 15.88"/><path d="M14.47 14.48 20 20"/><path d="M8.12 8.12 12 12"/></symbol>
+<symbol id="gp-ice-cream" viewBox="0 0 24 24"><path d="M8 11a4 4 0 0 1 8 0"/><path d="M7.5 11h9l-4.5 10z"/><path d="M9.3 15h5.4"/></symbol>
+<symbol id="gp-zap" viewBox="0 0 24 24"><path d="M13 2 4 14h7l-1 8 9-12h-7z"/></symbol>
+<symbol id="gp-gift" viewBox="0 0 24 24"><path d="M4 12v9h16v-9"/><rect x="3" y="8" width="18" height="4" rx="1"/><path d="M12 8v13"/><path d="M12 8C10 8 7.5 7.2 7.5 5.2 7.5 4.1 8.3 3.5 9.1 3.5 11 3.5 12 6 12 8zM12 8c2 0 4.5-.8 4.5-2.8 0-1.1-.8-1.7-1.6-1.7C13 3.5 12 6 12 8z"/></symbol>
+<symbol id="gp-water" viewBox="0 0 24 24"><path d="M12 3s6 6.4 6 10.5A6 6 0 0 1 6 13.5C6 9.4 12 3 12 3z"/></symbol>
+<symbol id="gp-bulb" viewBox="0 0 24 24"><path d="M9.5 18h5"/><path d="M10 21h4"/><path d="M12 3a6 6 0 0 0-4 10.5c.8.8 1 1.3 1 2.5h6c0-1.2.2-1.7 1-2.5A6 6 0 0 0 12 3z"/></symbol>
+<symbol id="gp-whatsapp" viewBox="0 0 24 24"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.46 1.32 4.97L2 22l5.25-1.38c1.45.79 3.08 1.21 4.79 1.21 5.46 0 9.91-4.45 9.91-9.91S17.5 2 12.04 2zm0 18.15c-1.53 0-3.03-.41-4.34-1.19l-.31-.18-3.12.82.83-3.04-.2-.31a8.2 8.2 0 0 1-1.26-4.14c0-4.54 3.7-8.23 8.24-8.23 4.54 0 8.23 3.69 8.23 8.23s-3.69 8.24-8.23 8.24zm4.52-6.16c-.25-.12-1.47-.72-1.69-.81-.23-.08-.39-.12-.56.12-.16.25-.64.81-.79.97-.14.17-.29.19-.54.06-.25-.12-1.05-.39-1.99-1.23-.74-.66-1.23-1.47-1.38-1.72-.14-.25-.02-.38.11-.51.11-.11.25-.29.37-.43.12-.14.16-.25.25-.41.08-.17.04-.31-.02-.43-.06-.12-.56-1.34-.76-1.84-.2-.48-.4-.42-.56-.43-.14 0-.31-.01-.48-.01s-.43.06-.66.31c-.23.25-.87.85-.87 2.07 0 1.22.89 2.4 1.01 2.56.12.17 1.75 2.67 4.23 3.74.59.26 1.05.41 1.41.52.59.19 1.13.16 1.56.1.48-.07 1.47-.6 1.68-1.18.21-.58.21-1.07.14-1.18-.06-.11-.22-.17-.47-.29z"/></symbol>
 </defs></svg>"""
 
 
@@ -302,7 +338,7 @@ def header(active):
       </nav>
 
       <div class="gp-header__actions">
-        <a class="gp-btn gp-btn--primary" href="/contact/#enquiry">Book / Enquire Now</a>
+        <a class="gp-btn gp-btn--primary" href="/contact/#enquiry">Book / Enquire</a>
         <button class="gp-burger" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="gp-mobile-panel">
           <span></span>
         </button>
@@ -331,6 +367,7 @@ def mobile_panel(active):
   <div class="gp-mobile-panel__foot">
     <a class="gp-btn gp-btn--primary gp-btn--block" href="/contact/#enquiry">Book / Enquire Now</a>
     <a class="gp-btn gp-btn--secondary gp-btn--block" href="tel:{PRIMARY_TEL}">Call {PRIMARY_TEL_LABEL}</a>
+    <a class="gp-btn gp-btn--secondary gp-btn--block" href="{WHATSAPP_LINK}" target="_blank" rel="noopener">WhatsApp Us</a>
     <p class="gp-small gp-mb-0">
       <a href="mailto:{BHILWARA['email']}">{BHILWARA['email']}</a><br>
       {BHILWARA['short']}, {BHILWARA['region']} {BHILWARA['postal']}
@@ -407,15 +444,21 @@ ACTIONBAR = f"""<nav class="gp-actionbar" aria-label="Quick actions">
     {icon('phone', 'gp-icon--sm gp-icon--primary')}
     Call
   </a>
-  <a href="/contact/#enquiry">
-    {icon('mail', 'gp-icon--sm gp-icon--primary')}
-    Enquire
+  <a class="gp-actionbar__wa" href="{WHATSAPP_LINK}" target="_blank" rel="noopener">
+    {icon('whatsapp', 'gp-icon--sm gp-icon--fill')}
+    WhatsApp
   </a>
   <a href="/contact/#enquiry">
     {icon('calendar', 'gp-icon--sm')}
     Book
   </a>
 </nav>"""
+
+# Floating WhatsApp button — shown on desktop / tablet (mobile uses the action bar)
+FAB = f"""<a class="gp-fab" href="{WHATSAPP_LINK}" target="_blank" rel="noopener" aria-label="Chat with Hotel Green Plaza on WhatsApp">
+  {icon('whatsapp', 'gp-icon--fill')}
+  <span class="gp-fab__label">WhatsApp Us</span>
+</a>"""
 
 
 LIGHTBOX = f"""<div class="gp-lightbox" role="dialog" aria-modal="true" aria-label="Image viewer" aria-hidden="true">
@@ -468,8 +511,13 @@ HOTEL_SCHEMA = """    {
         { "@type": "LocationFeatureSpecification", "name": "Banquet facilities", "value": true },
         { "@type": "LocationFeatureSpecification", "name": "Doctor on call", "value": true },
         { "@type": "LocationFeatureSpecification", "name": "Same-day laundry service", "value": true },
-        { "@type": "LocationFeatureSpecification", "name": "Travel ticket assistance", "value": true },
-        { "@type": "LocationFeatureSpecification", "name": "Car rental", "value": true }
+        { "@type": "LocationFeatureSpecification", "name": "Car rental", "value": true },
+        { "@type": "LocationFeatureSpecification", "name": "Electric-vehicle charging station", "value": true },
+        { "@type": "LocationFeatureSpecification", "name": "Free on-site parking", "value": true },
+        { "@type": "LocationFeatureSpecification", "name": "24-hour security and CCTV", "value": true },
+        { "@type": "LocationFeatureSpecification", "name": "On-site saloon", "value": true },
+        { "@type": "LocationFeatureSpecification", "name": "Ice cream parlor", "value": true },
+        { "@type": "LocationFeatureSpecification", "name": "Children's park and garden", "value": true }
       ],
       "aggregateRating": {
         "@type": "AggregateRating",
@@ -486,7 +534,9 @@ RESTAURANT_SCHEMA = """    {
       "name": "Hotel Green Plaza Restaurant",
       "url": "%(site)s/restaurant/",
       "image": "%(site)s/assets/img/general/hotel-green-plaza-restaurant.webp",
-      "servesCuisine": ["Multi-cuisine", "Pure Vegetarian"],
+      "servesCuisine": ["North Indian", "Punjabi", "Chinese", "South Indian", "Pure Vegetarian"],
+      "priceRange": "₹₹",
+      "hasMenu": "%(site)s/restaurant/#menu",
       "telephone": "+918107367300",
       "address": {
         "@type": "PostalAddress",
@@ -563,7 +613,7 @@ def page(url, title, description, body, og_image, hero_preload=None,
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&amp;family=Playfair+Display:wght@600&amp;display=swap">{preload}
-<link rel="stylesheet" href="/assets/css/style.css">
+<link rel="stylesheet" href="/assets/css/style.css?v={CSS_VER}">
 <noscript>
   <!-- Scroll reveal is progressive enhancement: without JS everything is simply visible -->
   <style>.gp-reveal{{opacity:1;transform:none}}.gp-map__poster{{cursor:default}}</style>
@@ -598,9 +648,11 @@ def page(url, title, description, body, og_image, hero_preload=None,
 
 {ACTIONBAR}
 
+{FAB}
+
 {LIGHTBOX}
 
-<script src="/assets/js/main.js" defer></script>
+<script src="/assets/js/main.js?v={JS_VER}" defer></script>
 </body>
 </html>
 """
@@ -678,7 +730,7 @@ def location_section(bg="gp-bg-cream"):
             </ul>
 
             <div class="gp-mt-32">
-              <a class="gp-btn gp-btn--primary" href="{MAPS_LINK}" target="_blank" rel="noopener">Get Directions</a>
+              <a class="gp-btn gp-btn--secondary" href="{MAPS_LINK}" target="_blank" rel="noopener">Get Directions</a>
             </div>
           </div>
         </div>
@@ -837,9 +889,11 @@ def home_body():
         ("bell", "24/7 front desk"), ("sparkles", "Housekeeping"),
         ("room-service", "Room service"), ("utensils", "Lobby-level restaurant"),
         ("doctor", "Doctor on call"), ("laundry", "Same-day laundry service"),
-        ("ticket", "Travel ticket assistance"), ("car", "Car rental"),
-        ("coffee", "In-room tea / coffee maker"), ("fridge", "Refrigerator"),
-        ("tv", "In-room cable television"), ("newspaper", "Newspaper"),
+        ("car", "Car rental"), ("zap", "EV charging station"),
+        ("parking", "Vehicle parking"), ("shield", "24-hour security &amp; CCTV"),
+        ("scissors", "Saloon"), ("ice-cream", "Ice cream parlor"),
+        ("tree", "Children's park &amp; garden"), ("coffee", "In-room tea / coffee maker"),
+        ("fridge", "Refrigerator"), ("tv", "In-room cable television"),
     ]
     amenity_items = "\n".join(
         f'        <li class="gp-amenity gp-reveal">{icon(n)}{t}</li>' for n, t in amenities)
@@ -867,12 +921,21 @@ def home_body():
     </div>
     <div class="container">
       <div class="gp-hero__content">
-        <span class="gp-eyebrow">Welcome to Hotel Green Plaza</span>
-        <h1>Comfortable Stays. Warm Hospitality.</h1>
-        <p>Hotel Green Plaza offers comfortable accommodation, pure vegetarian dining, banquet facilities and essential hotel services in Bhilwara.</p>
+        <span class="gp-eyebrow">Bhilwara &middot; NH-48 &middot; 100% Pure Veg</span>
+        <h1>Comfortable Rooms, Pure-Veg Dining, Warm Hospitality</h1>
+        <p>A family-friendly hotel, restaurant and banquet venue on the Bhilwara&ndash;Chittor highway &mdash; with 24-hour room service, parking, EV charging and a pure vegetarian kitchen.</p>
         <div class="gp-btn-group">
           <a class="gp-btn gp-btn--primary" href="/contact/#enquiry">Book Your Stay</a>
           <a class="gp-btn gp-btn--ghost" href="/about-us/">Explore Hotel</a>
+        </div>
+        <div class="gp-hero__trust">
+          <span class="gp-hero__trust-item">
+            <svg class="gp-star" aria-hidden="true"><use href="#gp-star"/></svg>
+            {AGGREGATE_RATING} rating
+          </span>
+          <span class="gp-hero__trust-sep" aria-hidden="true"></span>
+          <span class="gp-hero__trust-item">{AGGREGATE_COUNT:,} Google reviews</span>
+          <span class="gp-hero__trust-badge">100% Pure Vegetarian</span>
         </div>
       </div>
     </div>
@@ -1034,7 +1097,7 @@ def about_body():
         ("bed", "Accommodation", "Well-appointed rooms with AC and Non-AC options, attached bathrooms, digital television and 24-hour room service."),
         ("utensils", "Restaurant", "A lobby-level multi-cuisine restaurant with warm wooden interiors and a pure vegetarian menu."),
         ("users", "Banquets", "Banquet facilities suitable for functions, gatherings, conferences, business meetings and a wide range of events."),
-        ("bell", "Guest Services", "A 24/7 front desk, housekeeping, room service, doctor on call, laundry, travel ticket assistance and car rental."),
+        ("bell", "Guest Services", "A 24/7 front desk, housekeeping, room service, doctor on call, laundry, car rental with EV charging, an in-house saloon, an ice cream parlor and a children's garden."),
     ]
     service_cards = "\n".join(f"""        <div class="col-12 col-sm-6 col-lg-3">
           <article class="gp-service gp-reveal">
@@ -1261,6 +1324,265 @@ def accommodation_body():
 {cta_band()}"""
 
 
+# ---------------------------------------------------------------------------
+# Restaurant menu — transcribed from the hotel's own printed menu card
+# (pure vegetarian; Punjabi, Chinese & South Indian). Prices are in rupees.
+# Items with a "(Dry / Gravy)" style choice carry a single listed price.
+# ---------------------------------------------------------------------------
+
+MENU = [
+    {"name": "Soups", "icon": "utensils", "note": "A 1×2 (half-and-half) portion is ₹10 extra.", "items": [
+        ("Cream of Tomato", "110"), ("Sweet Corn Vegetable", "110"),
+        ("Vegetable Manchow", "110"), ("Vegetable Hot &amp; Sour", "110"),
+        ("Mushroom Soup", "110"), ("Veg. Noodles Soup", "110"),
+    ]},
+    {"name": "South Indian", "icon": "leaf", "items": [
+        ("Sp. Green Plaza Masala Dosa", "145"), ("Plain Dosa", "100"),
+        ("Plain Cheese Dosa", "125"), ("Masala Dosa", "110"),
+        ("Masala Butter Dosa", "120"), ("Paneer Masala Dosa", "150"),
+        ("Cheese Masala Dosa", "155"), ("Rava Sada Dosa", "120"),
+        ("Rava Masala Dosa", "125"), ("Mysore Masala Dosa", "135"),
+        ("Onion Tomato Uthappam", "120"), ("Mix Veg. Uthappam", "120"),
+        ("Idli Sambhar", "70"), ("Wada Sambhar", "85"), ("Idli Wada (mix)", "85"),
+        ("Fry Idli", "85"), ("Dahi Wada", "85"), ("Spring Dosa", "145"),
+        ("Puri Bhaji", "90"), ("Aloo Paratha Fry (with curd)", "85"),
+        ("Paneer Pakoda", "140"), ("Onion (mix) Pakoda", "75"),
+    ]},
+    {"name": "Chinese Starters", "icon": "utensils", "note": "Schezwan / green chutney charged extra.", "items": [
+        ("Paneer Tikka Schezwan Dry", "270"), ("Paneer Tikka Dry", "240"),
+        ("Paneer Lollipop", "250"), ("Paneer Chilli (Dry / Gravy)", "220"),
+        ("Paneer Manchurian (Dry / Gravy)", "225"), ("Paneer Schezwan (Dry)", "250"),
+        ("Paneer 65", "235"), ("Paneer Crispy", "300"),
+        ("Chhole Schezwan Dry", "175"), ("Veg. Manchurian (Dry / Gravy)", "200"),
+        ("Mushroom Manchurian (Dry / Gravy)", "245"), ("Veg. 65", "210"),
+        ("Veg. Crispy", "250"), ("Veg. Spring Roll", "205"),
+        ("Mushroom Tikka Dry", "250"), ("Baby Corn Chilli (Dry / Gravy)", "250"),
+        ("American Choupsey", "215"), ("Aloo Chilly Dry", "210"),
+        ("Veg. Hakka Noodles", "190"), ("Schezwan Noodles", "200"),
+        ("Manchurian with Noodles", "200"), ("Veg. Chowmein", "190"),
+        ("Chinese Bhel", "175"), ("Veg. Fried Rice", "175"),
+        ("Schezwan Fried Rice", "195"), ("Manchurian with Fried Rice", "200"),
+        ("Triple Schezwan Fried Rice", "260"), ("Mushroom Fried Rice", "240"),
+    ]},
+    {"name": "Punjabi Dishes", "icon": "utensils", "items": [
+        ("Sp. Green Plaza Vegetables", "260"), ("Veg. Garden", "250"),
+        ("Veg. Mumtaz", "260"), ("Veg. Toofani", "245"), ("Veg. Jafrani", "230"),
+        ("Veg. Hyderabadi", "220"), ("Veg. Kadai", "190"), ("Veg. Handi", "190"),
+        ("Veg. Kolhapuri", "180"), ("Veg. Jaipuri", "180"),
+        ("Veg. Makkhanwala", "180"), ("Veg. Tawa", "210"),
+        ("Veg. Navratan Korma (Sweet)", "210"), ("Kaju Curry (Spicy)", "185"),
+        ("Kaju Mushroom Masala", "240"), ("Mushroom Masala", "220"),
+        ("Dum Aloo Punjabi (Spicy)", "220"), ("Aloo Mutter", "140"),
+        ("Aloo Palak", "140"), ("Malai Pyaz", "190"), ("Veg. Kheema", "170"),
+        ("Aloo Gobi", "140"), ("Jeera Aloo", "140"), ("Aloo Sukhi Bhaji", "140"),
+        ("Chana Masala", "135"), ("Moong Masala", "135"), ("Bhindi Masala", "135"),
+        ("Bhindi Fry", "150"), ("Moong Fry", "150"), ("Sev Tomato", "135"),
+        ("Sev Masala", "135"), ("Plain Palak", "135"), ("Sev Masala (Milk)", "140"),
+        ("Curd Fry", "135"), ("Dal Fry", "120"), ("Dal Tadka", "140"),
+        ("Dal Makhni", "160"), ("Dal Fry Butter", "140"), ("Shahi Dal", "170"),
+        ("Methi Mutter Masala", "160"),
+    ]},
+    {"name": "Paneer", "icon": "utensils", "items": [
+        ("Paneer Butter Masala", "190"), ("Paneer Tikka Masala", "190"),
+        ("Paneer Bhurji", "210"), ("Paneer Mutter", "180"), ("Paneer Chana", "180"),
+        ("Paneer Shahi", "200"), ("Paneer Handi", "200"), ("Paneer Palak", "170"),
+        ("Paneer Kadai", "205"), ("Paneer Tawa", "240"), ("Paneer Kaju", "220"),
+        ("Paneer Lasuniya", "220"),
+    ]},
+    {"name": "Paneer Special", "icon": "sparkles", "items": [
+        ("Sp. Paneer Green Plaza", "290"), ("Paneer Banjara", "290"),
+        ("Paneer Shabnam", "270"), ("Paneer Toofani", "280"),
+        ("Paneer Kasturi", "280"), ("Paneer Banarasya", "280"),
+        ("Paneer Pasanda", "280"), ("Paneer Lazeez", "250"),
+        ("Paneer Rajwadi", "280"), ("Paneer Patiyala", "280"),
+        ("Paneer Begum Bahar", "260"), ("Paneer Jafrani", "260"),
+        ("Paneer Tawa Kaju", "270"), ("Paneer Garlic Tawa", "270"),
+        ("Paneer Hyderabadi", "230"), ("Paneer La Jawab", "260"),
+        ("Paneer Chatpata", "260"), ("Kaju Banarasya", "280"),
+        ("Cheese Butter Masala", "240"), ("Cheese Angoori", "290"),
+        ("Cheese Lasuniya", "260"), ("Cheese Begum Bahar", "280"),
+    ]},
+    {"name": "Kofta", "icon": "utensils", "items": [
+        ("Sp. Green Plaza Kofta", "270"), ("Paneer Kofta", "230"),
+        ("Veg. Kofta", "210"), ("Kaju Kofta", "240"), ("Nargis Kofta", "230"),
+        ("Malai Kofta (Sweet / Spicy)", "200"), ("Cheese Kofta", "240"),
+    ]},
+    {"name": "Jain Dishes", "icon": "leaf", "items": [
+        ("Paneer Butter Masala", "260"), ("Paneer Palak", "260"),
+        ("Plain Palak", "200"), ("Chana Masala", "190"), ("Kaju Curry", "270"),
+        ("Sev Tomato", "190"), ("Sev Milk", "200"),
+    ]},
+    {"name": "Tandoor Se", "icon": "utensils", "items": [
+        ("Tandoori Roti", "17"), ("Tandoori Butter Roti", "20"),
+        ("Plain Naan", "40"), ("Butter Naan", "45"), ("Cheese Naan", "80"),
+        ("Garlic Naan", "70"), ("Laccha Paratha", "50"), ("Kulcha Paratha", "50"),
+        ("Paneer Paratha", "100"), ("Stuffed Naan", "100"),
+        ("Aloo Paratha Tandoori (with curd)", "95"), ("Missi Roti", "50"),
+        ("Missi Roti Butter", "55"), ("Cheese Garlic Naan", "100"),
+    ]},
+    {"name": "Tawa ka Kamal", "icon": "utensils", "items": [
+        ("Plain Chapati", "15"), ("Butter Chapati", "18"),
+        ("Chapati Paratha Butter", "50"),
+    ]},
+    {"name": "Basmati Khazana", "icon": "utensils", "note": "Birishta (fried onion) charged extra.", "items": [
+        ("Sp. Green Plaza Biryani", "210"), ("Veg. Handi Biryani", "195"),
+        ("Veg. Hyderabadi Biryani", "195"), ("Veg. Biryani", "175"),
+        ("Sp. Tawa Biryani", "205"), ("Veg. Pulav", "150"),
+        ("Paneer Pulav", "180"), ("Kaju Pulav", "195"),
+        ("Kashmiri Pulav (Sweet)", "185"), ("Green Peas Pulav", "160"),
+        ("Masala Rice", "110"), ("Jeera Rice", "95"), ("Steam Rice", "95"),
+        ("Plain Rice", "85"), ("Dal Khichdi Butter", "140"),
+    ]},
+    {"name": "Thali", "icon": "utensils", "items": [
+        ("Punjabi Thali", "200", "Dal fry, chana masala, mix veg, plain rice, roasted papad and 3 chapatis."),
+        ("Sp. Punjabi Thali", "230", "Paneer masala, mix veg, dal fry, jeera rice, roasted papad, veg. raita, 3 butter chapatis and buttermilk."),
+    ]},
+    {"name": "Pizza", "icon": "utensils", "items": [
+        ("Veg. Italian Pizza", "160"), ("Paneer Pizza", "160"),
+        ("Cheese Pizza", "160"),
+    ]},
+    {"name": "Sandwiches", "icon": "utensils", "items": [
+        ("Grilled Vegetable", "70"), ("Grilled Cheese", "90"),
+        ("Vegetable Sandwich", "65"), ("Plain Cheese", "70"),
+        ("Aloo Mutter Grilled", "85"), ("Bread Butter", "40"),
+        ("Bread Butter Jam", "45"), ("Toast Butter", "45"),
+        ("Toast Butter Jam", "50"), ("French Fries", "100"),
+        ("Grilled Vegetable Cheese Slice", "110"),
+    ]},
+    {"name": "Raita, Salad &amp; Papad", "icon": "leaf", "items": [
+        ("Green Salad", "80"), ("Tomato Salad", "70"), ("Kachumbar Salad", "80"),
+        ("Veg. Raita", "80"), ("Boondi Raita", "80"), ("Pineapple Raita", "100"),
+        ("Fruit Raita", "100"), ("Curd", "70"), ("Roasted Papad", "20"),
+        ("Fry Papad", "20"), ("Roasted Masala Papad", "35"), ("Fry Masala Papad", "35"),
+    ]},
+    {"name": "Tea &amp; Coffee", "icon": "coffee", "note": "Prices shown as AC Hall / Hall.", "items": [
+        ("Golden Tea", "35 / 30"), ("Kathyavadi", "30 / 25"), ("Tea", "25 / 20"),
+        ("Green Tea", "35 / 30"), ("Nes Coffee", "35 / 30"), ("Hot Milk", "35 / 30"),
+        ("Cold Coffee", "85 / 80"), ("Cold Coffee with Ice Cream", "110 / 100"),
+    ]},
+    {"name": "Milk Shakes", "icon": "coffee", "note": "Served with ice cream.", "items": [
+        ("Mango Milk Shake", "100"), ("Pineapple Milk Shake", "100"),
+        ("Strawberry Milk Shake", "100"), ("Kesar Pista Milk Shake", "110"),
+        ("Chocolate Milk Shake", "100"), ("Butter Scotch Shake", "100"),
+    ]},
+    {"name": "Refreshers", "icon": "coffee", "items": [
+        ("Fresh Lime Soda / Water", "55"), ("Butter Milk", "25"),
+        ("Sp. Kheer", "80"), ("Plain Lassi", "55"), ("Sp. Green Rose Lassi", "85"),
+        ("Sp. Green Mango Lassi", "100"), ("Sp. Green Pineapple Lassi", "100"),
+        ("Sp. Green Chocolate Lassi", "100"),
+    ]},
+    {"name": "Ice Cream", "icon": "ice-cream", "items": [
+        ("Vanilla", "50"), ("Strawberry", "50"), ("Two in One", "60"),
+        ("Havmor Kulfi", "70"), ("Chocolate Chips", "60"), ("Butter Scotch", "60"),
+        ("Kaju Draksh", "60"), ("Kesar Pista", "70"), ("Chocolate Mud Cake", "70"),
+        ("American Nuts", "60"), ("Raj Bhog", "70"), ("Black Current", "60"),
+        ("Paan", "60"), ("Almond Carnival", "60"), ("Mango", "60"),
+        ("Pineapple", "60"),
+    ]},
+]
+
+# Restaurant house rules, printed on the menu card.
+MENU_NOTES = [
+    "Please allow around 20 minutes after placing your order.",
+    "Tandoori dishes are served during lunch and dinner hours only.",
+    "Party and bulk orders are welcome.",
+    "Parcel charges apply on takeaway orders.",
+    "Once placed, orders cannot be cancelled.",
+]
+
+
+# Higher-level courses so the 19 sections collapse to a short, tappable filter
+# bar rather than 19 chips. Each menu group maps to one course below.
+MENU_FILTERS = [
+    ("all", "All"),
+    ("starters", "Soups &amp; Starters"),
+    ("south-indian", "South Indian"),
+    ("mains", "Main Course"),
+    ("breads-rice", "Breads &amp; Rice"),
+    ("snacks", "Snacks &amp; Sides"),
+    ("beverages", "Beverages"),
+    ("desserts", "Desserts"),
+]
+
+MENU_CAT = {
+    "Soups": "starters", "Chinese Starters": "starters",
+    "South Indian": "south-indian",
+    "Punjabi Dishes": "mains", "Paneer": "mains", "Paneer Special": "mains",
+    "Kofta": "mains", "Jain Dishes": "mains", "Thali": "mains",
+    "Tandoor Se": "breads-rice", "Tawa ka Kamal": "breads-rice",
+    "Basmati Khazana": "breads-rice",
+    "Pizza": "snacks", "Sandwiches": "snacks", "Raita, Salad &amp; Papad": "snacks",
+    "Tea &amp; Coffee": "beverages", "Milk Shakes": "beverages", "Refreshers": "beverages",
+    "Ice Cream": "desserts",
+}
+
+
+def menu_group(group):
+    cat = MENU_CAT.get(group["name"], "")
+    note = ""
+    if group.get("note"):
+        note = f'\n          <p class="gp-menu__note">{group["note"]}</p>'
+    rows = []
+    for item in group["items"]:
+        name, price = item[0], item[1]
+        desc = item[2] if len(item) > 2 else ""
+        name_html = name
+        if desc:
+            name_html = f'{name}<span class="gp-menu__desc">{desc}</span>'
+        rows.append(f"""            <li class="gp-menu__row">
+              <span class="gp-menu__name">{name_html}</span>
+              <span class="gp-menu__dots" aria-hidden="true"></span>
+              <span class="gp-menu__price">₹{price}</span>
+            </li>""")
+    rows_html = "\n".join(rows)
+    return f"""        <div class="gp-menu__group gp-reveal" data-category="{cat}">
+          <div class="gp-menu__group-head">
+            {icon(group['icon'], 'gp-icon--sm')}
+            <h3>{group['name']}</h3>
+          </div>{note}
+          <ul class="gp-menu__list">
+{rows_html}
+          </ul>
+        </div>"""
+
+
+def menu_section():
+    groups = "\n".join(menu_group(g) for g in MENU)
+    filters = "\n".join(
+        '        <button class="gp-filter__btn" type="button" data-filter="%s" aria-pressed="%s">%s</button>'
+        % (slug, "true" if slug == "all" else "false", label)
+        for slug, label in MENU_FILTERS)
+    notes = "\n".join(
+        f"""            <li>{icon('check', 'gp-icon--sm')}<span>{n}</span></li>"""
+        for n in MENU_NOTES)
+    return f"""  <!-- ============================== MENU ============================== -->
+  <section class="gp-section gp-bg-cream" id="menu">
+    <div class="container">
+      <div class="gp-heading gp-text-center gp-narrow gp-mx-auto gp-reveal">
+        <span class="gp-eyebrow">Our Menu</span>
+        <h2>Pure Vegetarian Menu</h2>
+        <p>Punjabi, Chinese and South Indian dishes, freshly prepared. Tap a course to jump straight to it. Prices are in rupees and may change; please confirm current availability when you visit.</p>
+      </div>
+
+      <div class="gp-menu-nav" role="group" aria-label="Filter menu by course" data-menu-nav>
+{filters}
+      </div>
+
+      <div class="gp-menu">
+{groups}
+      </div>
+
+      <div class="gp-menu__foot gp-reveal">
+        <h3>Good to Know</h3>
+        <ul class="gp-feature-list gp-feature-list--2col">
+{notes}
+        </ul>
+      </div>
+    </div>
+  </section>
+"""
+
+
 def restaurant_body():
     highlights = [
         ("leaf", "Pure vegetarian restaurant"),
@@ -1299,10 +1621,13 @@ def restaurant_body():
           <div class="gp-reveal">
             <span class="gp-eyebrow">Dining</span>
             <h2>Pure Vegetarian Multi-Cuisine Dining</h2>
-            <p>Hotel Green Plaza features a lobby-level multi-cuisine restaurant with warm wooden interiors and a pure vegetarian menu.</p>
+            <p>Hotel Green Plaza features a lobby-level multi-cuisine restaurant with warm wooden interiors and a pure vegetarian menu spanning Punjabi, Chinese and South Indian dishes.</p>
             <p>Guests can enjoy a selection of delicious dishes in a comfortable and welcoming dining environment.</p>
             <hr class="gp-rule">
-            <a class="gp-btn gp-btn--primary" href="/contact/#enquiry">Contact Us for Dining Enquiries</a>
+            <div class="gp-btn-group">
+              <a class="gp-btn gp-btn--primary" href="#menu">View the Menu</a>
+              <a class="gp-btn gp-btn--secondary" href="/contact/#enquiry">Dining Enquiries</a>
+            </div>
           </div>
         </div>
         <div class="col-12 col-lg-6">
@@ -1356,13 +1681,14 @@ def restaurant_body():
     </div>
   </section>
 
+{menu_section()}
   <!-- ======================= RESTAURANT INFORMATION ======================= -->
-  <section class="gp-section gp-bg-cream">
+  <section class="gp-section gp-bg-white">
     <div class="container">
       <div class="gp-heading gp-text-center gp-narrow gp-mx-auto gp-reveal">
         <span class="gp-eyebrow">Restaurant Information</span>
         <h2>Planning a Visit</h2>
-        <p>Please contact us for current menu details and dining timings.</p>
+        <p>What to expect when you dine with us.</p>
       </div>
 
       <div class="row gp-gap-30">
@@ -1370,14 +1696,14 @@ def restaurant_body():
           <article class="gp-service gp-reveal">
             <span class="gp-service__icon">{icon('clock')}</span>
             <h3>Timings</h3>
-            <p>[VERIFY: restaurant timings and breakfast / lunch / dinner availability — do not publish until confirmed]</p>
+            <p>Tandoori dishes are served during lunch and dinner hours. [VERIFY: exact opening, breakfast, lunch and dinner timings — do not publish specific hours until confirmed]</p>
           </article>
         </div>
         <div class="col-12 col-sm-6 col-lg-4">
           <article class="gp-service gp-reveal">
-            <span class="gp-service__icon">{icon('utensils')}</span>
+            <span class="gp-service__icon">{icon('leaf')}</span>
             <h3>Menu</h3>
-            <p>[VERIFY: current menu categories and signature dishes — add once the kitchen confirms them]</p>
+            <p>A fully pure vegetarian menu of Punjabi, Chinese and South Indian dishes. <a class="gp-textlink" href="#menu">See the full menu with prices</a>.</p>
           </article>
         </div>
         <div class="col-12 col-sm-6 col-lg-4">
@@ -1392,7 +1718,7 @@ def restaurant_body():
   </section>
 
   <!-- ============================== GALLERY ============================== -->
-  <section class="gp-section gp-bg-white">
+  <section class="gp-section gp-bg-cream">
     <div class="container">
       <div class="gp-heading gp-text-center gp-narrow gp-mx-auto gp-reveal">
         <span class="gp-eyebrow">Gallery</span>
@@ -1577,11 +1903,12 @@ def services_body():
         ("bell", "24/7 front desk", "Assistance at the front desk at any hour of the day or night."),
         ("sparkles", "Housekeeping", "Regular housekeeping to keep rooms clean and comfortable."),
         ("room-service", "Room service", "24-hour room service for meals and requests."),
-        ("utensils", "Full-service restaurant", "A full-service, lobby-level pure vegetarian multi-cuisine restaurant."),
+        ("utensils", "Full-service restaurant", "A lobby-level pure vegetarian restaurant serving Punjabi, Chinese and South Indian food."),
         ("doctor", "Doctor on call", "Medical assistance arranged on call when needed."),
         ("laundry", "Same-day laundry service", "Same-day laundry and pressing for guests."),
-        ("ticket", "Travel ticket assistance", "Help with arranging travel tickets during your stay."),
-        ("car", "Car rental", "Car rental arrangements for local travel and transfers."),
+        ("car", "Car rental &amp; EV charging", "Car-on-rent arrangements plus an on-site electric-vehicle charging station."),
+        ("scissors", "Saloon", "An in-house saloon on the premises for guests' grooming needs."),
+        ("tree", "Children's park &amp; garden", "A garden and children's play area to relax and unwind."),
     ]
     special_cards = "\n".join(f"""        <div class="col-12 col-sm-6 col-lg-4">
           <article class="gp-service gp-reveal">
@@ -1600,11 +1927,15 @@ def services_body():
         f'        <li class="gp-amenity gp-reveal">{icon(n)}{t}</li>' for n, t in amenities)
 
     facility_icons = [
-        ("bed", "Rooms"), ("utensils", "Restaurant"), ("users", "Banquets"),
-        ("bell", "Reception"), ("room-service", "Room service"), ("sparkles", "Housekeeping"),
-        ("coffee", "Tea / coffee"), ("fridge", "Refrigerator"), ("tv", "Television"),
-        ("laundry", "Laundry"), ("car", "Car rental"), ("doctor", "Doctor on call"),
-        ("conference", "Conference"), ("pin", "Location"),
+        ("bed", "AC &amp; Non-AC rooms"), ("bath", "Attached bathrooms"),
+        ("utensils", "Pure veg restaurant"), ("users", "AC family hall"),
+        ("room-service", "24-hour room service"), ("sparkles", "Housekeeping"),
+        ("parking", "Vehicle parking"), ("shield", "24-hour security &amp; CCTV"),
+        ("car", "Car on rent"), ("zap", "EV charging station"),
+        ("doctor", "Doctor on call"), ("laundry", "Laundry service"),
+        ("scissors", "Saloon"), ("ice-cream", "Ice cream parlor"),
+        ("tree", "Children's park &amp; garden"), ("gift", "Shopping area / gifts"),
+        ("water", "24-hour hot &amp; cold water"), ("bulb", "24-hour electricity"),
     ]
     facility_items = "\n".join(
         f'        <li class="gp-amenity gp-reveal">{icon(n)}{t}</li>' for n, t in facility_icons)
@@ -1682,7 +2013,7 @@ def services_body():
 {facility_items}
       </ul>
 
-      <p class="gp-small gp-text-center gp-mt-32 gp-mx-auto gp-narrow">All services and amenities should be verified against current operations before the website goes live. [VERIFY: confirm the full services and amenities list]</p>
+      <p class="gp-small gp-text-center gp-mt-32 gp-mx-auto gp-narrow">Facilities listed above are from the hotel's own information. [VERIFY: confirm the full list is current and complete before launch]</p>
     </div>
   </section>
 
@@ -1829,7 +2160,7 @@ def contact_body():
 {branch_cards}
       </div>
 
-      <p class="gp-small gp-text-center gp-mt-32 gp-mx-auto gp-narrow">[VERIFY: rooms, dining and banquet facilities at the Neemuch and Ratlam properties — nothing is described here because no details were supplied]</p>
+      <p class="gp-small gp-text-center gp-mt-32 gp-mx-auto gp-narrow">[VERIFY: rooms, dining and banquet facilities at the Neemuch and Jaora properties — nothing is described here because no details were supplied]</p>
     </div>
   </section>
 
@@ -1869,7 +2200,7 @@ PAGES = [
 
     ("/services/", "services/index.html",
      "Hotel Services &amp; Amenities in Bhilwara | Hotel Green Plaza",
-     "Hotel Green Plaza Bhilwara offers a 24/7 front desk, housekeeping, room service, doctor on call, laundry, travel ticket assistance and car rental.",
+     "Hotel Green Plaza Bhilwara offers a 24/7 front desk, room service, doctor on call, laundry, car rental with EV charging, parking, a saloon, an ice cream parlor and more.",
      services_body, "Services", "/assets/img/hero/hotel-green-plaza-services-banner.webp", None),
 
     ("/gallery/", "gallery/index.html",

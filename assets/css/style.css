@@ -45,6 +45,15 @@
   --gp-fresh: #94ae49;     /* fresh green — hover states, badges, underlines */
   --gp-leaf: #8cc63e;      /* lime accent — micro-accents ONLY, max ~3% of a screen */
 
+  /* Warm accent — reserved for booking / enquiry CTAs so the one action that
+     matters pops against the all-green palette. 5.02:1 on white (AA), and
+     white text on the fill is also 5.02:1. */
+  --gp-accent: #b45309;
+  --gp-accent-dark: #92400e;
+  /* WhatsApp brand green — used only on the chat button so it reads as WhatsApp */
+  --gp-whatsapp: #25d366;
+  --gp-whatsapp-dark: #1da851;
+
   /* Neutrals */
   --gp-ink: #1f241f;       /* body text */
   --gp-muted: #5a6357;     /* secondary text, captions */
@@ -55,6 +64,10 @@
 
   /* Support */
   --gp-overlay: linear-gradient(180deg, rgba(36, 61, 39, .15) 0%, rgba(36, 61, 39, .72) 100%);
+  /* Neutral dark gradients — no green tint so the photo reads true */
+  /* Left-side scrim: text zone (left) is dark enough to read; hotel facade (right) shows clearly */
+  --gp-hero-grad: linear-gradient(to right, rgba(0, 0, 0, .82) 0%, rgba(0, 0, 0, .60) 42%, rgba(0, 0, 0, .22) 100%);
+  --gp-cta-grad: linear-gradient(180deg, rgba(0, 0, 0, .30) 0%, rgba(0, 0, 0, .80) 100%);
   --gp-shadow-sm: 0 1px 2px rgba(31, 36, 31, .06), 0 4px 12px rgba(31, 36, 31, .05);
   --gp-shadow-md: 0 8px 28px rgba(36, 61, 39, .10);
   --gp-radius: 6px;
@@ -67,6 +80,8 @@
   --gp-on-dark: rgba(255, 255, 255, .78);
   --gp-on-dark-soft: rgba(255, 255, 255, .58);
   --gp-hairline-dark: rgba(255, 255, 255, .14);
+  --gp-glass: rgba(255, 255, 255, .16);
+  --gp-glass-line: rgba(255, 255, 255, .34);
   --gp-scrim: rgba(36, 61, 39, .55);
   --gp-scrim-light: rgba(36, 61, 39, .30);
   --gp-scrim-deep: rgba(36, 61, 39, .82);
@@ -434,6 +449,21 @@ p:last-child { margin-bottom: 0; }
   color: var(--gp-primary);
 }
 
+.gp-btn--accent {
+  background: var(--gp-accent);
+  border-color: var(--gp-accent);
+  color: var(--gp-white);
+}
+
+.gp-btn--accent:hover,
+.gp-btn--accent:focus-visible {
+  background: var(--gp-accent-dark);
+  border-color: var(--gp-accent-dark);
+  color: var(--gp-white);
+  transform: translateY(-2px);
+  box-shadow: var(--gp-shadow-md);
+}
+
 .gp-btn--block { display: flex; width: 100%; }
 
 .gp-btn-group {
@@ -480,6 +510,7 @@ p:last-child { margin-bottom: 0; }
 .gp-icon--primary { stroke: var(--gp-primary); }
 .gp-icon--fresh { stroke: var(--gp-fresh); }
 .gp-icon--white { stroke: var(--gp-white); }
+.gp-icon--fill { fill: currentColor; stroke: none; }
 
 .gp-sprite { display: none; }
 
@@ -761,7 +792,20 @@ p:last-child { margin-bottom: 0; }
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: top center;
+  object-position: center center;
+}
+
+/* Page banners crop from the top so the subject stays in frame on short viewports */
+.gp-banner__media img { object-position: top center; }
+
+/* A very slow zoom gives the hero a little life without distracting motion */
+.gp-hero__media img {
+  animation: gp-kenburns 24s var(--gp-ease) forwards;
+}
+
+@keyframes gp-kenburns {
+  from { transform: scale(1); }
+  to   { transform: scale(1.08); }
 }
 
 .gp-hero::after,
@@ -776,7 +820,7 @@ p:last-child { margin-bottom: 0; }
 /* A lighter scrim than the banner's — the hero photo is a naturally dark
    night shot, so it doesn't need much extra darkening to keep white text
    readable, and a heavy scrim was hiding too much of the photo itself. */
-.gp-hero::after { background: var(--gp-overlay), var(--gp-scrim-light); }
+.gp-hero::after { background: var(--gp-hero-grad); }
 
 .gp-hero__content { max-width: 720px; }
 
@@ -804,6 +848,43 @@ p:last-child { margin-bottom: 0; }
 
 .gp-hero .gp-eyebrow { color: var(--gp-white); }
 .gp-hero .gp-eyebrow::after { background: var(--gp-leaf); box-shadow: 0 1px 6px rgba(0, 0, 0, .5); }
+
+/* Trust strip below the hero buttons — rating + review count + pure-veg badge */
+.gp-hero__trust {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px 20px;
+  margin-top: 30px;
+  color: var(--gp-white);
+  font-weight: 700;
+  font-size: 15px;
+  text-shadow: 0 1px 6px rgba(0, 0, 0, .6);
+}
+
+.gp-hero__trust-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.gp-hero__trust .gp-star { width: 17px; height: 17px; fill: var(--gp-leaf); }
+
+.gp-hero__trust-sep {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--gp-on-dark-soft);
+}
+
+.gp-hero__trust-badge {
+  padding: 5px 12px;
+  border-radius: 999px;
+  background: var(--gp-glass);
+  border: 1px solid var(--gp-glass-line);
+  backdrop-filter: blur(4px);
+  text-shadow: none;
+}
 
 /* The ghost button has no fill of its own on the lighter hero scrim, so it
    needs the same protection as the text above it. */
@@ -1121,6 +1202,133 @@ p:last-child { margin-bottom: 0; }
   font-size: 16px;
   font-weight: 700;
   color: var(--gp-primary);
+}
+
+/* ==========================================================================
+   15b. Restaurant menu
+   ========================================================================== */
+
+/* CSS columns let long and short sections tile without leaving gaps; each
+   group is kept whole with break-inside: avoid. */
+.gp-menu {
+  column-count: 3;
+  column-gap: 28px;
+}
+
+.gp-menu__group {
+  break-inside: avoid;
+  margin-bottom: 28px;
+  padding: 26px 28px 22px;
+  background: var(--gp-white);
+  border: 1px solid var(--gp-line);
+  border-radius: var(--gp-radius-lg);
+  box-shadow: var(--gp-shadow-sm);
+}
+
+.gp-menu__group-head {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  padding-bottom: 14px;
+  margin-bottom: 6px;
+  border-bottom: 2px solid var(--gp-tint);
+}
+
+.gp-menu__group-head .gp-icon { color: var(--gp-olive); flex: none; }
+
+.gp-menu__group h3 { font-size: 20px; margin: 0; }
+
+.gp-menu__note {
+  font-size: 13px;
+  color: var(--gp-muted);
+  margin: 8px 0 0;
+}
+
+.gp-menu__list {
+  list-style: none;
+  margin: 6px 0 0;
+  padding: 0;
+}
+
+.gp-menu__row {
+  display: flex;
+  align-items: flex-end;
+  gap: 8px;
+  padding: 7px 0;
+}
+
+.gp-menu__name {
+  font-size: 15.5px;
+  line-height: 1.4;
+  color: var(--gp-ink);
+}
+
+.gp-menu__desc {
+  display: block;
+  font-size: 12.5px;
+  line-height: 1.5;
+  color: var(--gp-muted);
+  margin-top: 2px;
+}
+
+/* Dotted leader between the dish name and its price */
+.gp-menu__dots {
+  flex: 1 1 auto;
+  min-width: 12px;
+  align-self: center;
+  border-bottom: 1px dotted var(--gp-line);
+}
+
+.gp-menu__price {
+  flex: none;
+  font-weight: 700;
+  color: var(--gp-primary);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.gp-menu__foot {
+  max-width: 760px;
+  margin: 8px auto 0;
+  padding: 28px 32px;
+  background: var(--gp-tint);
+  border-radius: var(--gp-radius-lg);
+}
+
+.gp-menu__foot h3 { font-size: 20px; margin: 0 0 8px; }
+
+.gp-feature-list--2col { grid-template-columns: repeat(2, 1fr); }
+
+/* Sticky category filter that shortens the long menu to one course at a time */
+.gp-menu-nav {
+  position: sticky;
+  top: var(--gp-header-h);
+  z-index: 40;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  margin: 0 0 40px;
+  padding: 14px;
+  background: var(--gp-cream);
+  border-radius: var(--gp-radius-lg);
+  box-shadow: var(--gp-shadow-sm);
+}
+
+@media (max-width: 767.98px) {
+  .gp-menu-nav {
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    overflow-x: auto;
+    border-radius: 0;
+    margin-left: calc(var(--gp-gutter) * -1);
+    margin-right: calc(var(--gp-gutter) * -1);
+    padding: 12px var(--gp-gutter);
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+  .gp-menu-nav::-webkit-scrollbar { display: none; }
+  .gp-menu-nav .gp-filter__btn { white-space: nowrap; }
 }
 
 /* ==========================================================================
@@ -1679,7 +1887,7 @@ body.gp-no-scroll { overflow: hidden; }
   position: absolute;
   inset: 0;
   z-index: -1;
-  background: var(--gp-overlay), var(--gp-scrim-deep);
+  background: var(--gp-cta-grad);
 }
 
 .gp-cta__media {
@@ -1706,6 +1914,7 @@ body.gp-no-scroll { overflow: hidden; }
   background: var(--gp-dark);
   color: var(--gp-on-dark);
   padding-top: 84px;
+  border-top: 4px solid var(--gp-primary);
 }
 
 .gp-footer h3 {
@@ -1806,6 +2015,47 @@ body.gp-no-scroll { overflow: hidden; }
 }
 
 .gp-actionbar a:last-child .gp-icon { stroke: var(--gp-white); }
+
+/* The WhatsApp cell in the mobile bar keeps the brand colour so it's obvious */
+.gp-actionbar a.gp-actionbar__wa { color: var(--gp-whatsapp-dark); }
+.gp-actionbar a.gp-actionbar__wa .gp-icon { fill: var(--gp-whatsapp-dark); stroke: none; }
+
+/* ==========================================================================
+   22b. Floating WhatsApp button (desktop / tablet)
+   ========================================================================== */
+
+.gp-fab {
+  position: fixed;
+  right: 22px;
+  bottom: 24px;
+  z-index: 105;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 13px 20px 13px 15px;
+  background: var(--gp-whatsapp);
+  color: var(--gp-white);
+  border-radius: 999px;
+  font-weight: 700;
+  font-size: 15px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, .22);
+  transition: transform .3s var(--gp-ease), box-shadow .3s var(--gp-ease), background-color .3s var(--gp-ease);
+}
+
+.gp-fab:hover,
+.gp-fab:focus-visible {
+  background: var(--gp-whatsapp-dark);
+  color: var(--gp-white);
+  transform: translateY(-2px);
+  box-shadow: 0 10px 28px rgba(0, 0, 0, .28);
+}
+
+.gp-fab .gp-icon { width: 26px; height: 26px; fill: var(--gp-white); stroke: none; }
+
+/* On mobile the sticky action bar already carries WhatsApp, so hide the float */
+@media (max-width: 767.98px) {
+  .gp-fab { display: none; }
+}
 
 /* ==========================================================================
    23. Motion — fade & rise, once, respectful of reduced-motion
@@ -1939,6 +2189,7 @@ body.gp-no-scroll { overflow: hidden; }
   .gp-service-grid { grid-template-columns: repeat(2, 1fr); }
   .gp-event-grid { grid-template-columns: repeat(2, 1fr); }
   .gp-masonry { column-count: 2; }
+  .gp-menu { column-count: 2; }
   .gp-carousel__slide { flex-basis: calc((100% - 24px) / 2); }
 
   .gp-heading { margin-bottom: 40px; }
@@ -1973,6 +2224,9 @@ body.gp-no-scroll { overflow: hidden; }
   .gp-rating__meta { text-align: center; }
 
   .gp-masonry { column-count: 1; }
+  .gp-menu { column-count: 1; }
+  .gp-feature-list--2col { grid-template-columns: 1fr; }
+  .gp-menu__foot { padding: 24px; }
   /* Peek the next card so the row visibly reads as swipeable */
   .gp-carousel__slide { flex-basis: 86%; }
   .gp-carousel__nav { margin-top: 20px; }

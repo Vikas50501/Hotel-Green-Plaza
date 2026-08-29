@@ -6,7 +6,7 @@ import re
 from collections import Counter
 from html.parser import HTMLParser
 
-ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..")
+ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "docs")
 PAGES = ["index.html", "404.html"] + [
     f"{d}/index.html" for d in
     ("about-us", "accommodation", "restaurant", "banquets", "services", "gallery", "contact")
@@ -250,7 +250,7 @@ for f in ("sitemap.xml", "robots.txt", "enquiry.php", "assets/js/main.js"):
 
 sitemap = io.open(os.path.join(ROOT, "sitemap.xml"), encoding="utf-8").read()
 # read the canonical host straight out of the generator so the two cannot drift
-SITE = re.search(r'^SITE = "([^"]+)"', io.open(os.path.join(ROOT, "_build/build.py"),
+SITE = re.search(r'^SITE = "([^"]+)"', io.open(os.path.join(ROOT, "..", "_build", "build.py"),
                                                encoding="utf-8").read(), re.M).group(1)
 for u in ("/", "/about-us/", "/accommodation/", "/restaurant/", "/banquets/",
           "/services/", "/gallery/", "/contact/"):

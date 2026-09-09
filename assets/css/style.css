@@ -2113,4 +2113,43 @@ body.gp-no-scroll { overflow: hidden; }
   .gp-fab { display: none; }
 }
 
+/* ==========================================================================
+   Nearby Landmark callout
+   ========================================================================== */
+
+.gp-landmark {
+  display: flex;
+  align-items: flex-start;
+  gap: 32px;
+  background: var(--gp-white);
+  border: 2px solid var(--gp-primary);
+  border-radius: var(--gp-radius-lg);
+  padding: 40px 48px;
+}
+
+.gp-landmark__icon {
+  flex-shrink: 0;
+  width: 68px;
+  height: 68px;
+  background: var(--gp-primary);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.gp-landmark__icon .gp-icon {
+  width: 32px;
+  height: 32px;
+  stroke: var(--gp-white);
+}
+
+@media (max-width: 575px) {
+  .gp-landmark {
+    flex-direction: column;
+    gap: 20px;
+    padding: 28px 24px;
+  }
+}
+
 /* Motion, responsive, and print styles are in animations.css and responsive.css */

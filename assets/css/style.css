@@ -2114,78 +2114,71 @@ body.gp-no-scroll { overflow: hidden; }
 }
 
 /* ==========================================================================
-   Industrial Corridor Cards
+   Nearby / Surroundings compact cards
    ========================================================================== */
 
-.gp-industry-card {
+.gp-nearby-item {
   background: var(--gp-white);
   border: 1px solid var(--gp-line);
-  border-top: 3px solid var(--gp-primary);
   border-radius: var(--gp-radius-lg);
-  padding: 32px;
+  padding: 28px 24px;
   height: 100%;
   display: flex;
   flex-direction: column;
-  gap: 14px;
+  gap: 8px;
 }
 
-.gp-industry-card__header {
-  display: flex;
-  align-items: flex-start;
-  gap: 16px;
-}
-
-.gp-industry-card__icon {
-  flex-shrink: 0;
-  width: 52px;
-  height: 52px;
+.gp-nearby-item__icon {
+  width: 48px;
+  height: 48px;
   background: var(--gp-tint);
   border-radius: 10px;
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-shrink: 0;
+  margin-bottom: 4px;
 }
 
-.gp-industry-card__icon .gp-icon {
-  width: 26px;
-  height: 26px;
+.gp-nearby-item__icon .gp-icon {
+  width: 24px;
+  height: 24px;
   stroke: var(--gp-primary);
 }
 
-.gp-industry-card__header .gp-eyebrow { margin-bottom: 4px; }
-.gp-industry-card__header h3 { margin: 0; font-size: 20px; }
-
-.gp-industry-card > p {
-  color: var(--gp-ink);
-  line-height: 1.65;
+.gp-nearby-item h3 {
+  font-size: 18px;
   margin: 0;
+  color: var(--gp-primary);
 }
 
-.gp-industry-list {
+.gp-nearby-item .gp-eyebrow { margin-bottom: 0; }
+
+.gp-nearby-list {
   list-style: none;
   padding: 0;
   margin: 4px 0 0;
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 6px;
 }
 
-.gp-industry-list li {
-  padding-left: 18px;
+.gp-nearby-list li {
+  padding-left: 14px;
   position: relative;
-  font-size: 15px;
-  line-height: 1.55;
+  font-size: 14px;
+  line-height: 1.5;
   color: var(--gp-ink);
 }
 
-.gp-industry-list li::before {
+.gp-nearby-list li::before {
   content: '';
   position: absolute;
   left: 0;
-  top: 8px;
-  width: 7px;
-  height: 7px;
-  background: var(--gp-primary);
+  top: 7px;
+  width: 6px;
+  height: 6px;
+  background: var(--gp-fresh);
   border-radius: 50%;
 }
 

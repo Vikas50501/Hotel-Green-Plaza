@@ -2114,6 +2114,82 @@ body.gp-no-scroll { overflow: hidden; }
 }
 
 /* ==========================================================================
+   Industrial Corridor Cards
+   ========================================================================== */
+
+.gp-industry-card {
+  background: var(--gp-white);
+  border: 1px solid var(--gp-line);
+  border-top: 3px solid var(--gp-primary);
+  border-radius: var(--gp-radius-lg);
+  padding: 32px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.gp-industry-card__header {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+}
+
+.gp-industry-card__icon {
+  flex-shrink: 0;
+  width: 52px;
+  height: 52px;
+  background: var(--gp-tint);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.gp-industry-card__icon .gp-icon {
+  width: 26px;
+  height: 26px;
+  stroke: var(--gp-primary);
+}
+
+.gp-industry-card__header .gp-eyebrow { margin-bottom: 4px; }
+.gp-industry-card__header h3 { margin: 0; font-size: 20px; }
+
+.gp-industry-card > p {
+  color: var(--gp-ink);
+  line-height: 1.65;
+  margin: 0;
+}
+
+.gp-industry-list {
+  list-style: none;
+  padding: 0;
+  margin: 4px 0 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.gp-industry-list li {
+  padding-left: 18px;
+  position: relative;
+  font-size: 15px;
+  line-height: 1.55;
+  color: var(--gp-ink);
+}
+
+.gp-industry-list li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 8px;
+  width: 7px;
+  height: 7px;
+  background: var(--gp-primary);
+  border-radius: 50%;
+}
+
+/* ==========================================================================
    Nearby Landmark callout
    ========================================================================== */
 

@@ -4,6 +4,9 @@ node_modules/
 # Build outputs
 *.zip
 
+# Contains SMTP password — never commit to public repo
+enquiry.php
+
 # OS files
 .DS_Store
 Thumbs.db

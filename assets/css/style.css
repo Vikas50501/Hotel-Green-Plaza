@@ -1363,33 +1363,29 @@ p:last-child { margin-bottom: 0; }
 
 .gp-feature-list--2col { grid-template-columns: repeat(2, 1fr); }
 
-/* Mobile: sidebar becomes a sticky horizontal pill-strip above the menu */
+/* Mobile: sidebar becomes a scrollable horizontal pill-strip above the menu */
 @media (max-width: 767.98px) {
   .gp-menu-layout {
     flex-direction: column;
-    gap: 16px;
+    gap: 0;
   }
 
-  /* Sticky filter strip — stays visible while scrolling through menu */
+  /* Horizontal scroll filter strip — static so it never overlaps menu */
   .gp-menu-sidebar {
-    width: auto;
-    position: sticky;
-    top: var(--gp-header-h);
-    z-index: 20;
+    width: 100%;
+    position: static;
     flex-direction: row;
     overflow-x: auto;
-    gap: 6px;
-    padding: 10px 12px;
+    gap: 8px;
+    padding: 12px 16px;
     border-radius: 0;
-    border-left: none;
-    border-right: none;
-    border-top: none;
-    box-shadow: 0 4px 12px rgba(0,0,0,.08);
+    border: none;
+    border-bottom: 2px solid var(--gp-line);
+    box-shadow: none;
+    background: var(--gp-white);
     -webkit-overflow-scrolling: touch;
     scrollbar-width: none;
-    /* Fade edges to hint scrollability */
-    -webkit-mask-image: linear-gradient(to right, transparent 0, #000 12px, #000 calc(100% - 12px), transparent 100%);
-    mask-image: linear-gradient(to right, transparent 0, #000 12px, #000 calc(100% - 12px), transparent 100%);
+    margin-bottom: 16px;
   }
   .gp-menu-sidebar::-webkit-scrollbar { display: none; }
   .gp-menu-sidebar__label { display: none; }
@@ -1398,9 +1394,9 @@ p:last-child { margin-bottom: 0; }
     white-space: nowrap;
     width: auto;
     flex: none;
-    padding: 8px 14px;
+    padding: 8px 16px;
     font-size: 13px;
-    min-height: 36px;
+    min-height: 38px;
     border-radius: 20px;
   }
 
@@ -1416,6 +1412,8 @@ p:last-child { margin-bottom: 0; }
 
   .gp-menu__price { font-size: 14px; }
 
+  .gp-menu__row { padding: 6px 0; }
+
   .gp-menu__note { font-size: 12px; }
 
   .gp-menu__foot { padding: 18px 14px; }
@@ -1424,6 +1422,7 @@ p:last-child { margin-bottom: 0; }
   .gp-menu-content {
     min-width: 0;
     width: 100%;
+    padding: 0 4px;
   }
 }
 

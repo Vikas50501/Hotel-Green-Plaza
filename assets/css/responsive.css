@@ -145,8 +145,6 @@
   .gp-masonry { column-count: 1; }
   .gp-menu { column-count: 1; }
   .gp-feature-list--2col { grid-template-columns: 1fr; }
-  .gp-menu-content { min-width: 0; }
-  .gp-menu__foot { padding: 24px; }
   .gp-carousel__slide { flex-basis: 86%; }
   .gp-carousel__nav { margin-top: 20px; }
 

@@ -1363,27 +1363,67 @@ p:last-child { margin-bottom: 0; }
 
 .gp-feature-list--2col { grid-template-columns: repeat(2, 1fr); }
 
-/* Mobile: sidebar stacks above menu as horizontal scroll strip */
+/* Mobile: sidebar becomes a sticky horizontal pill-strip above the menu */
 @media (max-width: 767.98px) {
-  .gp-menu-layout { flex-direction: column; gap: 20px; }
+  .gp-menu-layout {
+    flex-direction: column;
+    gap: 16px;
+  }
 
+  /* Sticky filter strip — stays visible while scrolling through menu */
   .gp-menu-sidebar {
     width: auto;
-    position: static;
+    position: sticky;
+    top: var(--gp-header-h);
+    z-index: 20;
     flex-direction: row;
     overflow-x: auto;
-    gap: 8px;
-    padding: 12px;
-    border-radius: var(--gp-radius-lg);
+    gap: 6px;
+    padding: 10px 12px;
+    border-radius: 0;
+    border-left: none;
+    border-right: none;
+    border-top: none;
+    box-shadow: 0 4px 12px rgba(0,0,0,.08);
     -webkit-overflow-scrolling: touch;
     scrollbar-width: none;
+    /* Fade edges to hint scrollability */
+    -webkit-mask-image: linear-gradient(to right, transparent 0, #000 12px, #000 calc(100% - 12px), transparent 100%);
+    mask-image: linear-gradient(to right, transparent 0, #000 12px, #000 calc(100% - 12px), transparent 100%);
   }
   .gp-menu-sidebar::-webkit-scrollbar { display: none; }
   .gp-menu-sidebar__label { display: none; }
+
   .gp-menu-sidebar .gp-filter__btn {
     white-space: nowrap;
     width: auto;
     flex: none;
+    padding: 8px 14px;
+    font-size: 13px;
+    min-height: 36px;
+    border-radius: 20px;
+  }
+
+  /* Menu cards — tighter padding on small screens */
+  .gp-menu__group {
+    padding: 16px 14px 14px;
+    margin-bottom: 14px;
+  }
+
+  .gp-menu__group h3 { font-size: 17px; }
+
+  .gp-menu__name { font-size: 14px; }
+
+  .gp-menu__price { font-size: 14px; }
+
+  .gp-menu__note { font-size: 12px; }
+
+  .gp-menu__foot { padding: 18px 14px; }
+
+  /* Ensure menu content never overflows viewport */
+  .gp-menu-content {
+    min-width: 0;
+    width: 100%;
   }
 }
 

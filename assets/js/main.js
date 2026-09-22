@@ -96,6 +96,10 @@
         b.setAttribute('aria-pressed', String(b === btn));
       });
 
+      // Scroll active pill to centre of the strip on mobile
+      var stripLeft = btn.offsetLeft - (menuNav.offsetWidth / 2) + (btn.offsetWidth / 2);
+      menuNav.scrollTo({ left: stripLeft, behavior: 'smooth' });
+
       menuGroups.forEach(function (group) {
         var cat = group.getAttribute('data-category') || '';
         var show = wanted === 'all' || cat === wanted;
